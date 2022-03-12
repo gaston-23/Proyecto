@@ -1,0 +1,26 @@
+{
+  "name": "tinder-pet",
+  "version": "1.0.0",
+  "description": "Proyecto tinder de mascotas para integrador de Ing de sw 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaston-23/tinderPet.git"
+  },
+  "keywords": [
+    "tinderPet;",
+    "users"
+  ],
+  "author": "Gaston Cavallo & Juan Manuel Fernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaston-23/tinderPet/issues"
+  },
+  "homepage": "https://github.com/gaston-23/tinderPet#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
