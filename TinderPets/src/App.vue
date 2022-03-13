@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Login />
-  </div>
+  <div class="text-center"><Carousel /></div>
 </template>
 
 <style>
@@ -68,7 +66,6 @@ a,
 </style>
 
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
 import Login from "./components/Login.vue";
+import Carousel from "./components/Carousel.vue";
 </script>
