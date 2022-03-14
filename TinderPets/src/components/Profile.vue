@@ -1,30 +1,32 @@
 <template>
   <div class="text-center">
     <img
-      class="mb-4"
+      class="mb-4 rounded"
       src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
-      width="250"
-      height="250"
+      width="200"
+      height="200"
       alt=""
     />
   </div>
   <div class="form-floating mb-3">
-    <input
-      type="email"
-      class="form-control"
-      id="floatingInput"
-      placeholder="name@example.com"
-    />
-    <label for="floatingInput">Email address</label>
+    <input type="email" class="form-control" id="floatingInput" />
+    <label for="floatingInput">Email</label>
   </div>
-  <div class="form-floating">
-    <input
-      type="password"
-      class="form-control"
-      id="floatingPassword"
-      placeholder="Password"
-    />
-    <label for="floatingPassword">Password</label>
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="floatingInput" />
+    <label for="floatingInput">Nombre completo</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="floatingInput" />
+    <label for="floatingInput">Nombre mascota</label>
+  </div>
+    <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="floatingInput" />
+    <label for="floatingInput">Teléfono</label>
+  </div>
+    <div class="form-floating mb-5">
+    <input type="email" class="form-control" id="floatingInput" />
+    <label for="floatingInput">Contraseña</label>
   </div>
 
   <BottomNavBar />
