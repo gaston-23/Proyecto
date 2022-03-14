@@ -1,17 +1,18 @@
 <template lang="">
-<div class="" style="background-color:#FF4D6D; width: 18rem;">
-  <div class="">
+<div class="pt-5" style="background-color:#FFF0F3; width: 18rem;">
+  <div class="pt-5 pl-3">
     <form>
-      <div class="mb-3 text-center">
-        <label for="exampleInputEmail1" class="form-label text-light">Email</label>
-        <input type="email" class="form-control" id="exampleInputEmail1">
-      </div>
-      <div class="mb-3 text-center">
-        <label for="exampleInputPassword1" class="form-label text-light">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
+<div class="form-floating mb-3">
+  <input type="email" class="form-control" id="floatingInput">
+  <label for="floatingInput">Email</label>
+</div>
+<div class="form-floating">
+  <input type="password" class="form-control" id="floatingPassword" >
+  <label for="floatingPassword">Contraseña</label>
+</div>
       <div class="text-center">
-        <button type="submit" class="btn" style="background-color:#FFCCD5">Iniciar Sesión</button>
+        <button @click="$router.push('/home')" type="submit" class="btn text-light mt-4" style="background-color:#A4133C">Iniciar Sesión</button>
+        <!-- <router-link to="/home">Sumbit</router-link> -->
       </div>
     </form>
   </div>

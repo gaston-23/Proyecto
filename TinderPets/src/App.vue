@@ -1,5 +1,11 @@
 <template>
-  <div class="text-center"><Carousel /></div>
+<router-view v-slot="{ Component }">
+  <transition>
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </transition>
+</router-view>
 </template>
 
 <style>
