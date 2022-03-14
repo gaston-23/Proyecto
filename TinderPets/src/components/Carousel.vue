@@ -6,7 +6,10 @@
   >
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000" />
+        <img
+          class="d-block w-100"
+          src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>My Caption Title (1st Image)</h5>
           <p>
@@ -16,7 +19,10 @@
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60" />
+        <img
+          class="d-block w-100"
+          src="https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>My Caption Title (1st Image)</h5>
           <p>
@@ -25,8 +31,11 @@
           </p>
         </div>
       </div>
-            <div class="carousel-item">
-        <img class="d-block w-100" src="https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg" />
+      <div class="carousel-item">
+        <img
+          class="d-block w-100"
+          src="https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>My Caption Title (1st Image)</h5>
           <p>
@@ -55,13 +64,17 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+  <BottomNavBar />
 </template>
 
 <style scoped>
 </style>
 
 <script>
+import BottomNavBar from "./BottomNavBar.vue";
+
 export default {
+  components: { BottomNavBar },
   data() {
     return {};
   },
