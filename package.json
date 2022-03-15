@@ -40,6 +40,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.16.1",
+    "resize-optimize-images": "^1.1.2",
     "vue": "^2.6.14"
   },
   "devDependencies": {

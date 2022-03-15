@@ -9,6 +9,7 @@ import passport from "passport";
 
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import resizeOptimizeImages from 'resize-optimize-images';
 
 class PetsController {
   /**
@@ -81,6 +82,31 @@ class PetsController {
 
       const newInfo = req.body;
       console.log(req.body);
+      // subir imagenes
+      if (!!req.files) {
+        // -> foto
+
+        console.log(req.files.profile);
+        console.log(req.files);
+        if (req.files.profile) {
+          let profileFoto = req.files.profile;
+          // nombre unico
+          let uniq_foto = `${(new Date).getTime()}-${req.params.id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
+
+          // guardar imagen
+          await profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
+          newInfo.img= uniq_foto;
+          
+
+          // optimizar
+          const opts = {
+            images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
+            width: 600,
+            quality: 90
+          };
+          await resizeOptimizeImages(opts);
+        }
+      }
       try {
         await Pet.findByIdAndUpdate(req.params.id, newInfo, {
           returnDocument: "after",
@@ -125,6 +151,9 @@ class PetsController {
       pet.tags = req.body.tags;
       console.log(req.body);
 
+      
+
+
       pet
         .save()
         .then((petStored) => {
@@ -134,6 +163,29 @@ class PetsController {
               message: "Error al registrar la mascota",
             });
           } else {
+            // subir imagenes
+				    if (!!req.files.profile) {
+            // -> foto
+            console.log(req.files,profile);
+            if (req.files.profile) {
+              let profileFoto = req.files.profile;
+              // nombre unico
+              let uniq_foto = `${(new Date).getTime()}-${petStored._id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
+
+              // guardar imagen
+              profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
+              petStored.update({img: uniq_foto})
+              
+
+              // optimizar
+              const opts = {
+                images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
+                width: 600,
+                quality: 90
+              };
+              resizeOptimizeImages(opts);
+					  }
+          }
             User.findByIdAndUpdate(
               { _id: payload.user._id },
               { $addToSet: { pets: petStored._id } }
