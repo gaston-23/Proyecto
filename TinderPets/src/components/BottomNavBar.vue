@@ -1,10 +1,11 @@
 <template>
   <div class="fixed-bottom" style="background-color: #800f2f">
-    <nav class="navbar  navbar-light d-flex justify-content-between">
-      <div class="ml-2 container-fluid">
-        <a class="navbar-brand" @click="$router.push('/profile')"><img src="/img/profile.png" alt="" width="35" height="30" class="d-inline-block align-text-top"></a>
-        <a class="navbar-brand" @click="$router.push('/home')"><img src="/img/home.png" alt="" width="42" height="30" class="d-inline-block align-text-top"></a>
-        <a class="navbar-brand" @click="$router.push('/matches')"><img src="/img/matches.png" alt="" width="40" height="35" class="d-inline-block align-text-top"></a>
+    <nav class="navbar navbar-light d-flex justify-content-between">
+      <div class="mx-3 container-fluid">
+        <!-- Se usan los glyphs porque si no, no funciona -->
+        <a class="navbar-brand ml-2" @click="$router.push('/profile')"><i class="fa-solid text-light"></i></a>
+        <a class="navbar-brand pr-2" @click="$router.push('/home')"><i class="fa-solid text-light"></i></a>
+        <a class="navbar-brand" @click="$router.push('/matches')"><i class="fa-solid fa-comment text-light "></i></a>
       </div>
     </nav>
   </div>

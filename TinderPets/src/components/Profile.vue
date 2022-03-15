@@ -8,28 +8,73 @@
       alt=""
     />
   </div>
-  <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" />
-    <label for="floatingInput">Email</label>
+  <div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"
+        ><i class="fa-solid"></i></span
+      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nombre"
+        aria-label="Nombre"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"
+        ><i class="fa-solid"></i></span
+      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Apellido"
+        aria-label="Apellido"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"
+        ><i class="fa-solid"></i></span
+      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nombre mascota"
+        aria-label="Nombre mascota"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"
+        ><i class="fa-solid"></i></span
+      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Teléfono"
+        aria-label="Teléfono"
+        aria-describedby="basic-addon1"
+      />
+    </div>
   </div>
-  <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" />
-    <label for="floatingInput">Nombre completo</label>
-  </div>
-  <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" />
-    <label for="floatingInput">Nombre mascota</label>
-  </div>
-    <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" />
-    <label for="floatingInput">Teléfono</label>
-  </div>
-    <div class="form-floating mb-5">
-    <input type="email" class="form-control" id="floatingInput" />
-    <label for="floatingInput">Contraseña</label>
+
+  <!-- Button trigger modal -->
+  <div class="text-center">
+    <button
+      type="button"
+      class="btn mb-5 text-light"
+      style="background: #800f2f"
+      data-toggle="modal"
+      data-target="#staticBackdrop"
+    >
+      <i class="fa-solid mr-2"></i>Editar
+    </button>
   </div>
 
   <BottomNavBar />
+
+  <EditProfile />
 </template>
 
 <style scoped>
@@ -37,9 +82,10 @@
 
 <script>
 import BottomNavBar from "./BottomNavBar.vue";
+import EditProfile from "./EditProfile.vue";
 
 export default {
-  components: { BottomNavBar },
+  components: { BottomNavBar, EditProfile },
   data() {
     return {};
   },
