@@ -10,7 +10,8 @@ var PetSchema = schema({
     img: String,
     kind: String,
     subkind: String,
-    tags: Array    
+    tags: Array,
+    owner: {type: schema.ObjectId, ref: 'User'}
 });
 
 module.exports = mongoose.model('Pet', PetSchema);

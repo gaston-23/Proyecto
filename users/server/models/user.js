@@ -8,10 +8,9 @@ var UserSchema = schema({
     name: String,
     surname: String,
     email: String,
+    password: String,
     img: String,
-    pets: Array,
-    chats: Array,
-    matchs: Array    
+    matchs: [{type: schema.ObjectId, ref: 'User'}],  
 });
 
 module.exports = mongoose.model('User', UserSchema);

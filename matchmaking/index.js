@@ -23,7 +23,7 @@ app.use(fileUpload({
 	createParentPath: true
 }));
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT_MATCHMAKING || 5000;
 
 mongoose.connect('mongodb://localhost:27017/tinderpets', (err,res)=>{
 	if (err) {

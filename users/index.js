@@ -8,6 +8,9 @@ import passport from 'passport';
 
 import mongoose from 'mongoose';
 
+import AuthRoutes from './server/routes/AuthRoutes'; 
+import PetsRoutes from './server/routes/PetsRoutes';
+
 
 const app = express();
 
@@ -21,7 +24,7 @@ app.use(fileUpload({
 	createParentPath: true
 }));
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT_USERS || 5001;
 
 mongoose.connect('mongodb://localhost:27017/tinderpets', (err,res)=>{
 	if (err) {
@@ -34,7 +37,8 @@ mongoose.connect('mongodb://localhost:27017/tinderpets', (err,res)=>{
 /**
  * Rutas 
  * */
-// app.use('/users/', AuthRoutes);
+app.use('/users/', AuthRoutes);
+app.use('/pets/', PetsRoutes);
 
 // when a random route is inputed
 app.get('*', (req, res) => {
