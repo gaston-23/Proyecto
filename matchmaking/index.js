@@ -9,6 +9,7 @@ import passport from 'passport';
 
 import mongoose from 'mongoose';
 
+import MatchRoutes from './server/routes/MatchRoutes';
 
 
 const app = express();
@@ -36,7 +37,7 @@ mongoose.connect('mongodb://localhost:27017/tinderpets', (err,res)=>{
 /**
  * Rutas 
  * */
-// app.use('/match/', AuthRoutes);
+app.use('/match/', MatchRoutes);
 
 // when a random route is inputed
 app.get('*', (req, res) => {
