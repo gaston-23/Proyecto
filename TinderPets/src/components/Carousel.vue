@@ -6,20 +6,20 @@
     data-interval="false"
   >
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div v-for="(pet, index) in pets" :class="'carousel-item ' + isFirst(index)">
         <div class="card" style="">
           <img
-            src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
+            :src="pet.image"
             class="card-img-top"
             alt="..."
             height="200"
             width="200"
           />
-          
+
           <div class="card-body">
-            <h5 class="card-title">Fatiga</h5>
+            <h5 class="card-title">{{ pet.petName }}</h5>
             <p class="card-text">
-              Se carga alta vagancia el choco pero es un tipazo
+              {{ pet.description }}
             </p>
             <div class="d-flex justify-content-around">
               <a
@@ -27,83 +27,15 @@
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i class="fa-solid fa-circle-xmark"></i></a
-              >
+                ><i class="fa-solid fa-circle-xmark"></i
+              ></a>
               <a
                 class="btn btn-success"
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i class="fa-solid fa-heart"></i></a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="card" style="">
-          <img
-            src="https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60"
-            class="card-img-top"
-            alt="..."
-            height="200"
-            width="200"
-          />
-          <div class="card-body">
-            <h5 class="card-title">Roco</h5>
-            <p class="card-text">
-              Un perro re buena onda, aveces te re contra muerde pero es piola
-              el choco
-            </p>
-            <div class="d-flex justify-content-around">
-              <a
-                class="btn btn-danger"
-                href="#carouselExampleIndicators"
-                role="button"
-                data-slide="next"
-                ><i class="fa-solid fa-circle-xmark"></i></a
-              >
-              <a
-                class="btn btn-success"
-                href="#carouselExampleIndicators"
-                role="button"
-                data-slide="next"
-                ><i class="fa-solid fa-heart"></i></a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="card" style="">
-          <img
-            src="https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg"
-            class="card-img-top"
-            alt="..."
-            height="200"
-            width="200"
-          />
-          <div class="card-body">
-            <h5 class="card-title">Perro facha</h5>
-            <p class="card-text">
-              ehh pará emoción si todavía ni termino el tinder, es el perro
-              fachaaa
-            </p>
-            <div class="d-flex justify-content-around">
-              <a
-                class="btn btn-danger"
-                href="#carouselExampleIndicators"
-                role="button"
-                data-slide="next"
-                ><i class="fa-solid fa-circle-xmark"></i></a
-              >
-              <a
-                class="btn btn-success"
-                href="#carouselExampleIndicators"
-                role="button"
-                data-slide="next"
-                ><i class="fa-solid fa-heart"></i></a
-              >
+                ><i class="fa-solid fa-heart"></i
+              ></a>
             </div>
           </div>
         </div>
@@ -122,7 +54,39 @@ import BottomNavBar from "./BottomNavBar.vue";
 export default {
   components: { BottomNavBar },
   data() {
-    return {};
+    return {
+      pets: [
+        {
+          petName: "Perro facha",
+          description:
+            "ehh pará emoción si todavía ni termino el tinder, es el perro fachaaa",
+          image:
+            "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg",
+        },
+        {
+          petName: "Roco",
+          description:
+            "Un perro re buena onda, aveces te re contra muerde pero es piola el choco",
+          image:
+            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
+        },
+        {
+          petName: "Fatiga",
+          description: "Se carga alta vagancia el choco pero es un tipazo",
+          image:
+            "https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000",
+        },
+      ],
+    };
   },
+  methods: {
+    isFirst(index){
+      if(index == 0){
+        return "active";
+      }else{
+        return "";
+      }
+    }
+  }
 };
 </script>

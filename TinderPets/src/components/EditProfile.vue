@@ -19,7 +19,7 @@
             type="button"
             class="btn-close"
             data-dismiss="modal"
-            aria-label="Close"
+            aria-label="Cerrar"
           ></button>
         </div>
         <div class="modal-body">
@@ -43,16 +43,33 @@
             <input type="email" class="form-control" id="floatingInput" />
             <label for="floatingInput">Teléfono</label>
           </div>
-          <div class="form-floating mb-2">
+          <div class="form-floating mb-3">
             <input type="email" class="form-control" id="floatingInput" />
             <label for="floatingInput">Contraseña</label>
           </div>
+          <div class="input-group mb-2">
+            <textarea
+              type="text"
+              class="form-control"
+              rows="3"
+              placeholder="Descripción"
+              aria-label="Descripción"
+              aria-describedby="basic-addon1"
+            />
+          </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
+            Cerrar
           </button>
-          <button type="button" class="btn text-light" style="background:#800f2f">Confirmar</button>
+          <button
+            type="button"
+            class="btn text-light"
+            style="background: #800f2f"
+          >
+            Confirmar
+          </button>
         </div>
       </div>
     </div>

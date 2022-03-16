@@ -10,8 +10,8 @@
   </div>
   <div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"
-        ><i class="fa-solid"></i></span
+      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+        ><i class="fa-solid text-light"></i></span
       >
       <input
         type="text"
@@ -22,8 +22,8 @@
       />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"
-        ><i class="fa-solid"></i></span
+      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+        ><i class="fa-solid text-light"></i></span
       >
       <input
         type="text"
@@ -34,8 +34,8 @@
       />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"
-        ><i class="fa-solid"></i></span
+      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+        ><i class="fa-solid text-light"></i></span
       >
       <input
         type="text"
@@ -46,14 +46,24 @@
       />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"
-        ><i class="fa-solid"></i></span
+      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+        ><i class="fa-solid text-light"></i></span
       >
       <input
         type="text"
         class="form-control"
         placeholder="Teléfono"
         aria-label="Teléfono"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <textarea
+        type="text"
+        class="form-control"
+        rows="3"
+        placeholder="Descripción"
+        aria-label="Descripción"
         aria-describedby="basic-addon1"
       />
     </div>
