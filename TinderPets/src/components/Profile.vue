@@ -10,19 +10,25 @@
   </div>
   <div>
     <div class="input-group mb-3">
-      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+      <span
+        class="input-group-text"
+        style="background-color: #800f2f"
+        id="basic-addon1"
         ><i class="fa-solid text-light"></i></span
       >
       <input
         type="text"
         class="form-control"
-        placeholder="Nombre"
-        aria-label="Nombre"
+        placeholder="Nombre dueño"
+        aria-label="Nombre dueño"
         aria-describedby="basic-addon1"
       />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+      <span
+        class="input-group-text"
+        style="background-color: #800f2f"
+        id="basic-addon1"
         ><i class="fa-solid text-light"></i></span
       >
       <input
@@ -34,7 +40,10 @@
       />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
+      <span
+        class="input-group-text"
+        style="background-color: #800f2f"
+        id="basic-addon1"
         ><i class="fa-solid text-light"></i></span
       >
       <input
@@ -42,18 +51,6 @@
         class="form-control"
         placeholder="Nombre mascota"
         aria-label="Nombre mascota"
-        aria-describedby="basic-addon1"
-      />
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" style="background-color:#800f2f" id="basic-addon1"
-        ><i class="fa-solid text-light"></i></span
-      >
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Teléfono"
-        aria-label="Teléfono"
         aria-describedby="basic-addon1"
       />
     </div>
@@ -80,11 +77,22 @@
     >
       <i class="fa-solid mr-2"></i>Editar
     </button>
+    <button
+      type="button"
+      class="btn mb-5 text-light mx-2"
+      style="background: #800f2f"
+      data-toggle="modal"
+      data-target="#petModal"
+    >
+      <i class="fa-solid mr-2"></i>Editar Mascota
+    </button>
   </div>
 
   <BottomNavBar />
 
   <EditProfile />
+
+  <EditPet />
 </template>
 
 <style scoped>
@@ -93,9 +101,10 @@
 <script>
 import BottomNavBar from "./BottomNavBar.vue";
 import EditProfile from "./EditProfile.vue";
+import EditPet from "./EditPet.vue";
 
 export default {
-  components: { BottomNavBar, EditProfile },
+  components: { BottomNavBar, EditProfile, EditPet },
   data() {
     return {};
   },

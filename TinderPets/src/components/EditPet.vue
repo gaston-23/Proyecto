@@ -2,19 +2,17 @@
   <!-- Modal -->
   <div
     class="modal fade"
-    id="staticBackdrop"
+    id="petModal"
     data-backdrop="static"
     data-keyboard="false"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="petModal"
     aria-hidden="true"
   >
     <div class="modal-dialog text-ligh">
       <div class="modal-content">
         <div class="modal-header" style="background: #800f2f">
-          <h5 class="modal-title text-light" id="staticBackdropLabel">
-            Editar usuario
-          </h5>
+          <h5 class="modal-title text-light" id="petModal">Editar mascota</h5>
           <button
             type="button"
             class="btn-close"
@@ -24,40 +22,31 @@
         </div>
         <div class="modal-body">
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              v-model="user.name"
-            />
-            <label for="floatingInput">Nombre</label>
+            <input type="text" class="form-control" id="floatingInput" v-model="pet.name"/>
+            <label for="floatingInput">Nombre mascota</label>
           </div>
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              v-model="user.surname"
-            />
-            <label for="floatingInput">Apellido</label>
+            <input type="text" class="form-control" id="floatingInput" v-model="pet.age"/>
+            <label for="floatingInput">Edad</label>
           </div>
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              v-model="user.phone"
-            />
-            <label for="floatingInput">Teléfono</label>
+            <input type="text" class="form-control" id="floatingInput" v-model="pet.kind"/>
+            <label for="floatingInput">Especie</label>
           </div>
           <div class="form-floating mb-3">
-            <input
-              type="email"
+            <input type="text" class="form-control" id="floatingInput" v-model="pet.subkind"/>
+            <label for="floatingInput">Raza</label>
+          </div>
+          <div class="input-group mb-2">
+            <textarea
+              type="text"
               class="form-control"
-              id="floatingInput"
-              v-model="user.email"
+              rows="3"
+              placeholder="Descripción"
+              aria-label="Descripción"
+              aria-describedby="basic-addon1"
+              :value="pet.description"
             />
-            <label for="floatingInput">Email</label>
           </div>
         </div>
 
@@ -85,13 +74,20 @@
 export default {
   data() {
     return {
-      user: {
-        name: "Juanma",
-        surname: "Fernandez",
-        email: "juanmanuelf12@gmail.com",
-        phone: "2615545156",
-      },
+      pet: {
+        name: "Roco",
+        age: "6",
+        img: "",
+        kind: "Perro",
+        subkind: "Pichichu",
+        description: "Buenaso este perro, seguro se lleva bien con tu perra"
+      }
     };
   },
+  metthods: {
+    getPetInfo(){
+      // Pegada al backend
+    }
+  }
 };
 </script>

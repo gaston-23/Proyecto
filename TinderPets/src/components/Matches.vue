@@ -1,5 +1,5 @@
 <template>
-  <div v-for="match in matches" class="card border-dark mb-3" style="max-width: 540px">
+  <div v-for="match in matches" class="card mb-5" style="max-width: 540px">
     <div class="row g-0">
       <div class="col-5">
         <img

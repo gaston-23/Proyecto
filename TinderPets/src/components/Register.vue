@@ -6,24 +6,20 @@
   <div class="pt-5 pl-3">
     <form>
         <div class="form-floating mb-3">
-  <input type="text" class="form-control" id="floatingInput">
+  <input type="text" class="form-control" id="floatingInput" v-model="name">
   <label for="floatingInput">Nombre</label>
 </div>
 <div class="form-floating mb-3">
-  <input type="text" class="form-control" id="floatingInput1">
+  <input type="text" class="form-control" id="floatingInput1" v-model="surname">
   <label for="floatingInput1">Apellido</label>
 </div>
 <div class="form-floating mb-3">
-  <input type="text" class="form-control" id="floatingInput2">
+  <input type="text" class="form-control" id="floatingInput2" v-model="email">
   <label for="floatingInput2">Email</label>
 </div>
 <div class="form-floating mb-3">
-  <input type="password" class="form-control" id="floatingPassword3" >
+  <input type="password" class="form-control" id="floatingPassword3" v-model="password">
   <label for="floatingPassword3">Contraseña</label>
-</div>
-<div class="form-floating">
-  <input type="password" class="form-control" id="floatingPassword4" >
-  <label for="floatingPassword4">Confirmar contraseña</label>
 </div>
       <div class="text-center">
         <button @click="$router.push('/home')" type="submit" class="btn text-light mt-4" style="background-color:#800F2F">Registrarse</button>
@@ -39,9 +35,13 @@
 export default {
   data() {
     return {
-        
+      email: "juanmanuel12@gmail.com",
+      name: "Juanma",
+      surname: "Fernandez",
+      password: "prueba",
     };
   },
+  methods: {},
 };
 </script>
 <style lang="">
