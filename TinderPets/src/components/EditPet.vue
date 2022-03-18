@@ -12,7 +12,9 @@
     <div class="modal-dialog text-ligh">
       <div class="modal-content">
         <div class="modal-header" style="background: #800f2f">
-          <h5 class="modal-title text-light" id="petModal">Editar mascota</h5>
+          <h5 class="modal-title text-light" id="petModal">
+            {{ this.create ? "Crear mascota" : "Editar mascota" }}
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -22,19 +24,39 @@
         </div>
         <div class="modal-body">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="pet.name"/>
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              v-model="pet.name"
+            />
             <label for="floatingInput">Nombre mascota</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="pet.age"/>
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              v-model="pet.age"
+            />
             <label for="floatingInput">Edad</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="pet.kind"/>
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              v-model="pet.kind"
+            />
             <label for="floatingInput">Especie</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="pet.subkind"/>
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              v-model="pet.subkind"
+            />
             <label for="floatingInput">Raza</label>
           </div>
           <div class="input-group mb-2">
@@ -48,6 +70,10 @@
               :value="pet.description"
             />
           </div>
+          <div class="mb-3 text-center">
+            <label for="file" class="form-label">Foto de mascota</label>
+            <input class="file" type="file" id="file" />
+          </div>
         </div>
 
         <div class="modal-footer">
@@ -58,6 +84,7 @@
             type="button"
             class="btn text-light"
             style="background: #800f2f"
+            @click="this.create ? this.createPet() : this.updatePetInfo"
           >
             Confirmar
           </button>
@@ -71,23 +98,99 @@
 </style>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: ["create"],
   data() {
     return {
       pet: {
+        user_id: "",
         name: "Roco",
         age: "6",
         img: "",
         kind: "Perro",
         subkind: "Pichichu",
-        description: "Buenaso este perro, seguro se lleva bien con tu perra"
-      }
+        description: "Buenaso este perro, seguro se lleva bien con tu perra",
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyMzNjYzY5YTU0ZjlmNTI2Yjg1Yzg5OSIsIm1hdGNocyI6W10sIm5hbWUiOiJKdWFubWEiLCJzdXJuYW1lIjoiRmVybmFuZGV6IiwiZW1haWwiOiJqdWFubWFudWVsZjEyQGdtYWlsLmNvbSIsImltZyI6Im51bGwiLCJwYXNzd29yZCI6IiQyYiQwNCQuS2FJMTlpcEVsaEhFQ2pqS3FxTGllSFh5aGhaUnU1b2Fud0JWLmtsZTRqVFdjS0VpRVl4NiIsIl9fdiI6MH0sImlhdCI6MTY0NzU2NTY2M30.BYbqndNtnAPczqATsxRXqTJM6cVo_OJ5XhS0w-1gOHg",
+      },
     };
   },
-  metthods: {
-    getPetInfo(){
-      // Pegada al backend
-    }
-  }
+  methods: {
+    createPet() {
+      let formData = new FormData();
+      let imageFile = document.querySelector("#file");
+      formData.append("name", this.pet.name);
+      formData.append("age", this.pet.age);
+      formData.append("subkind", this.pet.subkind);
+      formData.append("tags", ["perro"]);
+      formData.append("profile", imageFile.files[0]);
+      console.log(formData);
+      axios
+        .post("http://127.0.0.1:5001/pets/add", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${this.pet.token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getPetInfo() {
+      axios
+        .get("http://127.0.0.1:5001/users/user", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((res) => {
+          let data = res.data;
+          this.user_id = data._id;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      axios
+        .get("http://127.0.0.1:5001/pets/single/" + this.user_id, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((res) => {
+          let data = res.data;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    updatePetInfo() {
+      axios
+        .put(
+          "http://127.0.0.1:5001/pets/add",
+          {
+            name: this.pet.name,
+            age: this.pet.age,
+            subkind: this.pet.subkind,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>

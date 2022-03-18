@@ -13,17 +13,19 @@
   <input type="password" class="form-control" id="floatingPassword" v-model="pass">
   <label for="floatingPassword">Contraseña</label>
 </div>
-      <div class="text-center">
-        <button @click="login" type="submit" class="btn text-light mt-4" style="background-color:#800F2F">Ingresar</button>
+    </form>
+          <div class="text-center">
+        <button @click="login" class="btn text-light mt-4" style="background-color:#800F2F">Ingresar</button>
         <!-- <router-link to="/home">Sumbit</router-link> -->
       </div>
-    </form>
   </div>
 
 </div>
 
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -33,11 +35,19 @@ export default {
   },
   methods: {
     login() {
-      if (this.email == "hola" && this.pass == "hola") {
-        this.$router.push("/home");
-      }else{
-        alert("Contraseña incorrecta");
-      }
+      console.log(this.email, this.pass);
+      axios
+        .post("http://127.0.0.1:5001/users/login", {
+          email: this.email,
+          password: this.pass,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/home");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
 };

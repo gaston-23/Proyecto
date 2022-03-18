@@ -39,27 +39,28 @@ class PetsController {
    * Obtener todas las mascotas mediante id de usuario
    * @return {json}
    */
-   static async getAllPets(req, res, next) {
+  static async getAllPets(req, res, next) {
     passport.authenticate("jwt", { session: false }, async (err, payload) => {
       if (payload == false)
         return res.status(401).send({ message: "Sin autorización" });
 
       try {
-        return Pet.find({owner: req.params.id} , (error, person)=> {
+        console.log(req.params.id);
+        return Pet.find({ owner: req.params.id }, (error, person) => {
           if (error) {
             throw error
           } else {
-            if(person){
+            if (person) {
               console.log(person);
               return res.status(200).json(person)
-            }else{
+            } else {
               console.error(error.message, "getPet");
               return res.status(400).json({
                 message: "Error al obtener mascota",
               });
             }
           }
-        });
+        }).clone();
       } catch (error) {
         console.error(error.message, "getPet");
         return res.status(400).json({
@@ -95,8 +96,8 @@ class PetsController {
 
           // guardar imagen
           await profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
-          newInfo.img= uniq_foto;
-          
+          newInfo.img = uniq_foto;
+
 
           // optimizar
           const opts = {
@@ -149,10 +150,7 @@ class PetsController {
       pet.kind = req.body.kind;
       pet.subkind = req.body.subkind;
       pet.tags = req.body.tags;
-      console.log(req.body);
-
-      
-
+      console.log("req",req.body);
 
       pet
         .save()
@@ -164,28 +162,28 @@ class PetsController {
             });
           } else {
             // subir imagenes
-				    if (!!req.files.profile) {
-            // -> foto
-            console.log(req.files,profile);
-            if (req.files.profile) {
-              let profileFoto = req.files.profile;
-              // nombre unico
-              let uniq_foto = `${(new Date).getTime()}-${petStored._id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
+            if (!!req.files.profile) {
+              // -> foto
+              console.log(req.files, req.files.profile);
+              if (req.files.profile) {
+                let profileFoto = req.files.profile;
+                // nombre unico
+                let uniq_foto = `${(new Date).getTime()}-${petStored._id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
 
-              // guardar imagen
-              profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
-              petStored.update({img: uniq_foto})
-              
+                // guardar imagen
+                profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
+                petStored.update({ img: uniq_foto })
 
-              // optimizar
-              const opts = {
-                images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
-                width: 600,
-                quality: 90
-              };
-              resizeOptimizeImages(opts);
-					  }
-          }
+
+                // optimizar
+                const opts = {
+                  images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
+                  width: 600,
+                  quality: 90
+                };
+                resizeOptimizeImages(opts);
+              }
+            }
             User.findByIdAndUpdate(
               { _id: payload.user._id },
               { $addToSet: { pets: petStored._id } }
@@ -217,24 +215,24 @@ class PetsController {
    * Obtener todas las mascotas mediante id de usuario
    * @return {json}
    */
-   static async removePets(req, res, next) {
+  static async removePets(req, res, next) {
     passport.authenticate("jwt", { session: false }, async (err, payload) => {
       if (payload == false)
         return res.status(401).send({ message: "Sin autorización" });
 
-    await Pet.findByIdAndDelete(req.params.id)
-        .then( response => {
-          if(response){
+      await Pet.findByIdAndDelete(req.params.id)
+        .then(response => {
+          if (response) {
             console.log(response);
             return res.status(200).json(response)
-          }else{
+          } else {
             console.error(error.message, "getPet");
             return res.status(400).json({
               message: "Error al obtener mascota",
             });
           }
         })
-        .catch( error => {
+        .catch(error => {
           console.error(error.message, "deletePet");
           return res.status(400).json({
             message: "Error al obtener mascota",

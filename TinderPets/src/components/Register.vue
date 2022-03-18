@@ -21,27 +21,46 @@
   <input type="password" class="form-control" id="floatingPassword3" v-model="password">
   <label for="floatingPassword3">Contraseña</label>
 </div>
-      <div class="text-center">
-        <button @click="$router.push('/home')" type="submit" class="btn text-light mt-4" style="background-color:#800F2F">Registrarse</button>
+    </form>
+          <div class="text-center">
+        <button @click="register" class="btn text-light mt-4" style="background-color:#800F2F">Registrarse</button>
         <!-- <router-link to="/home">Sumbit</router-link> -->
       </div>
-    </form>
   </div>
 
 </div>
 
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      email: "juanmanuel12@gmail.com",
-      name: "Juanma",
-      surname: "Fernandez",
-      password: "prueba",
+      email: "",
+      name: "",
+      surname: "",
+      password: "",
     };
   },
-  methods: {},
+  methods: {
+    register() {
+      axios
+        .post("http://127.0.0.1:5001/users/signin", {
+          name: this.name,
+          surname: this.surname,
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/login");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 <style lang="">
