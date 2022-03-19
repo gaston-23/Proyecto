@@ -37,7 +37,7 @@ export default {
     login() {
       console.log(this.email, this.pass);
       axios
-        .post("http://127.0.0.1:5001/users/login", {
+        .post("http://"+import.meta.env.VITE_API_USERS +"/users/login", {
           email: this.email,
           password: this.pass,
         })
@@ -45,7 +45,7 @@ export default {
           console.log(response);
           let token = response.data.token;
           // Gurdamos el token de ingreso en la cache local
-          localStorage.setItem("t",token)
+          localStorage.setItem("t",token);
           this.$router.push("/home");
         })
         .catch(function (error) {

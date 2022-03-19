@@ -104,7 +104,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get("http://127.0.0.1:5001/users/user", {
+        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
           headers: {
             Authorization: `Bearer ${this.user.token}`,
           },
@@ -123,7 +123,7 @@ export default {
       console.log(this.user.token);
       axios
         .put(
-          "http://127.0.0.1:5001/users/user",
+          "http://"+import.meta.env.VITE_API_USERS +"/users/user",
           {
             name: this.user.name,
             email: this.user.email,

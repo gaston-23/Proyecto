@@ -145,7 +145,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get("http://127.0.0.1:5001/users/user", {
+        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -165,7 +165,7 @@ export default {
     },
     getPet() {
       axios
-        .get("http://127.0.0.1:5001/pets/all/" + this.id, {
+        .get("http://"+import.meta.env.VITE_API_USERS +"/pets/all/" + this.id, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },

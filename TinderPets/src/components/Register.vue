@@ -46,7 +46,7 @@ export default {
   methods: {
     register() {
       axios
-        .post("http://127.0.0.1:5001/users/signin", {
+        .post("http://"+import.meta.env.VITE_API_USERS +"/users/signin", {
           name: this.name,
           surname: this.surname,
           email: this.email,

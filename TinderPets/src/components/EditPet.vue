@@ -131,7 +131,7 @@ export default {
       formData.append("profile", imageFile.files[0]);
       console.log(formData);
       axios
-        .post("http://127.0.0.1:5001/pets/add", formData, {
+        .post("http://"+import.meta.env.VITE_API_USERS +"/pets/add", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.pet.token}`,
@@ -146,7 +146,7 @@ export default {
     },
     getPetInfo() {
       axios
-        .get("http://127.0.0.1:5001/users/user", {
+        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -159,7 +159,7 @@ export default {
           console.error(error);
         });
       axios
-        .get("http://127.0.0.1:5001/pets/single/" + this.user_id, {
+        .get("http://"+import.meta.env.VITE_API_USERS +"/pets/single/" + this.user_id, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -175,7 +175,7 @@ export default {
     updatePetInfo() {
       axios
         .put(
-          "http://127.0.0.1:5001/pets/add",
+          "http://"+import.meta.env.VITE_API_USERS +"5001/pets/add",
           {
             name: this.pet.name,
             age: this.pet.age,
