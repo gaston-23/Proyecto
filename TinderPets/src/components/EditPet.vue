@@ -102,6 +102,10 @@ import axios from "axios";
 
 export default {
   props: ["create"],
+  created() {
+    this.token = localStorage.getItem("t");
+    console.log(this.pet.token);
+  },
   data() {
     return {
       pet: {
@@ -112,8 +116,7 @@ export default {
         kind: "Perro",
         subkind: "Pichichu",
         description: "Buenaso este perro, seguro se lleva bien con tu perra",
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyMzNjYzY5YTU0ZjlmNTI2Yjg1Yzg5OSIsIm1hdGNocyI6W10sIm5hbWUiOiJKdWFubWEiLCJzdXJuYW1lIjoiRmVybmFuZGV6IiwiZW1haWwiOiJqdWFubWFudWVsZjEyQGdtYWlsLmNvbSIsImltZyI6Im51bGwiLCJwYXNzd29yZCI6IiQyYiQwNCQuS2FJMTlpcEVsaEhFQ2pqS3FxTGllSFh5aGhaUnU1b2Fud0JWLmtsZTRqVFdjS0VpRVl4NiIsIl9fdiI6MH0sImlhdCI6MTY0NzU2NTY2M30.BYbqndNtnAPczqATsxRXqTJM6cVo_OJ5XhS0w-1gOHg",
+        token: "",
       },
     };
   },

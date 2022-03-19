@@ -43,6 +43,9 @@ export default {
         })
         .then((response) => {
           console.log(response);
+          let token = response.data.token;
+          // Gurdamos el token de ingreso en la cache local
+          localStorage.setItem("t",token)
           this.$router.push("/home");
         })
         .catch(function (error) {

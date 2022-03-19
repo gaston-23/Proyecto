@@ -110,7 +110,7 @@
 
   <EditProfile />
 
-  <EditPet :create="create"/>
+  <EditPet :create="create" />
 </template>
 
 <style scoped>
@@ -125,8 +125,10 @@ import axios from "axios";
 export default {
   components: { BottomNavBar, EditProfile, EditPet },
   created() {
+    this.token = localStorage.getItem("t");
+    console.log("token",this.token);
     this.getUser();
-    this.petName? this.create = false : this.create = true;
+    this.petName ? (this.create = false) : (this.create = true);
   },
   data() {
     return {
@@ -137,8 +139,7 @@ export default {
       description: "",
       // Esta propiedad indica si estamos creando una mascota o no
       create: true,
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyMzNjYzY5YTU0ZjlmNTI2Yjg1Yzg5OSIsIm1hdGNocyI6W10sIm5hbWUiOiJKdWFubWEiLCJzdXJuYW1lIjoiRmVybmFuZGV6IiwiZW1haWwiOiJqdWFubWFudWVsZjEyQGdtYWlsLmNvbSIsImltZyI6Im51bGwiLCJwYXNzd29yZCI6IiQyYiQwNCQuS2FJMTlpcEVsaEhFQ2pqS3FxTGllSFh5aGhaUnU1b2Fud0JWLmtsZTRqVFdjS0VpRVl4NiIsIl9fdiI6MH0sImlhdCI6MTY0NzU2NTY2M30.BYbqndNtnAPczqATsxRXqTJM6cVo_OJ5XhS0w-1gOHg",
+      token: "",
     };
   },
   methods: {
@@ -163,7 +164,6 @@ export default {
         });
     },
     getPet() {
-      console.log(this.id);
       axios
         .get("http://127.0.0.1:5001/pets/all/" + this.id, {
           headers: {
@@ -172,7 +172,7 @@ export default {
         })
         .then((res) => {
           let data = res.data;
-          console.log(data);
+          console.log("petData", data);
         })
         .catch((error) => {
           console.error(error);
