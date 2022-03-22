@@ -1,12 +1,15 @@
 <template>
   <div
     id="carouselExampleIndicators"
-    class="carousel slide"
+    class="carousel slide mt-5"
     data-ride="carousel"
     data-interval="false"
   >
     <div class="carousel-inner">
-      <div v-for="(pet, index) in pets" :class="'carousel-item ' + isFirst(index)">
+      <div
+        v-for="(pet, index) in pets"
+        :class="'carousel-item ' + isFirst(index)"
+      >
         <div class="card" style="">
           <img
             :src="pet.image"
@@ -53,8 +56,15 @@ import BottomNavBar from "./BottomNavBar.vue";
 
 export default {
   components: { BottomNavBar },
+  created() {
+    this.token = localStorage.getItem("t");
+    if (this.token == null) {
+      this.$router.push("/login");
+    }
+  },
   data() {
     return {
+      token: "",
       pets: [
         {
           petName: "Perro facha",
@@ -80,13 +90,13 @@ export default {
     };
   },
   methods: {
-    isFirst(index){
-      if(index == 0){
+    isFirst(index) {
+      if (index == 0) {
         return "active";
-      }else{
+      } else {
         return "";
       }
-    }
-  }
+    },
+  },
 };
 </script>

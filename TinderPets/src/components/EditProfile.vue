@@ -69,6 +69,7 @@
             type="button"
             class="btn text-light"
             style="background: #800f2f"
+            @click="updateUser"
           >
             Confirmar
           </button>
@@ -82,16 +83,66 @@
 </style>
 
 <script>
+import axios from "axios";
+
 export default {
+  created() {
+    this.user.token = localStorage.getItem("t");
+    this.getUser();
+  },
   data() {
     return {
       user: {
-        name: "Juanma",
-        surname: "Fernandez",
-        email: "juanmanuelf12@gmail.com",
+        name: "",
+        surname: "",
+        email: "",
         phone: "2615545156",
+        token: "",
       },
     };
+  },
+  methods: {
+    getUser() {
+      axios
+        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
+          headers: {
+            Authorization: `Bearer ${this.user.token}`,
+          },
+        })
+        .then((res) => {
+          let data = res.data;
+          this.user.email = data.email;
+          this.user.name = data.name;
+          this.user.surname = data.surname;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    updateUser() {
+      console.log(this.user.token);
+      axios
+        .put(
+          "http://"+import.meta.env.VITE_API_USERS +"/users/user",
+          {
+            name: this.user.name,
+            email: this.user.email,
+            surname: this.user.surname,
+            email: this.user.email,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.user.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

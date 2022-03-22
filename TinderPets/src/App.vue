@@ -1,12 +1,44 @@
 <template>
-<router-view v-slot="{ Component }">
-  <transition>
-    <keep-alive>
-      <component :is="Component" />
-    </keep-alive>
-  </transition>
-</router-view>
+  <div class="container">
+    <!-- Barra de navegación general a toda la app -->
+    <div class="fixed-top">
+      <nav class="navbar navbar-light row" style="background-color: #800f2f">
+        <div class="row d-flex">
+          <div class="col-10">
+            <a class="navbar-brand text-light" href="#">
+              <img
+                src="/img/dog-icon-12.png"
+                alt=""
+                width="30"
+                height="24"
+                class="d-inline-block align-text-top mx-2"
+              />
+              Tinder Pets
+            </a>
+          </div>
+          <div class="d-flex col-2 mt-1">
+            <a
+              class="btn text-right ml-4"
+              role="button"
+              aria-controls="offcanvas"
+              @click="logout"
+            >
+              <i class="fa-solid text-light text-right"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <router-view class="" v-slot="{ Component }">
+      <transition>
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
+  </div>
 </template>
+
 
 <style>
 @import "./assets/base.css";
@@ -71,7 +103,18 @@ a,
 }
 </style>
 
-<script setup>
+<script>
 import Login from "./components/Login.vue";
 import Carousel from "./components/Carousel.vue";
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("t");
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
