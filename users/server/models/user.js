@@ -9,6 +9,7 @@ var UserSchema = schema({
     surname: String,
     email: String,
     password: String,
+    tel: String,
     img: String,
     matchs: [{type: schema.ObjectId, ref: 'User'}],  
 });

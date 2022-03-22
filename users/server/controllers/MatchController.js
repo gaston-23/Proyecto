@@ -3,12 +3,9 @@ require('dotenv').config();
 import Pet from '../models/pet';
 import Like from '../models/like';
 
-import auth from '../passport';
 
 import passport from 'passport';
 
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import moment from 'moment';
 
 
@@ -75,7 +72,7 @@ class MatchController {
 			like.owner	= payload.user._id;
 			await like.save()
 			.then(saved => {
-				
+				//verificar si tiene un like y devolver match
 				return res.status(200).json(saved)
 			})
 			.catch( error => {

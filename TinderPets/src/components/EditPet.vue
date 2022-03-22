@@ -104,7 +104,7 @@ export default {
   props: ["create"],
   created() {
     this.token = localStorage.getItem("t");
-    console.log(this.pet.token);
+    console.log(this.token);
   },
   data() {
     return {
@@ -118,6 +118,7 @@ export default {
         description: "Buenaso este perro, seguro se lleva bien con tu perra",
         token: "",
       },
+      token: "",
     };
   },
   methods: {
@@ -134,7 +135,7 @@ export default {
         .post("http://"+import.meta.env.VITE_API_USERS +"/pets/add", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${this.pet.token}`,
+            Authorization: `Bearer ${this.token}`,
           },
         })
         .then((response) => {
