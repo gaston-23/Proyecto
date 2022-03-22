@@ -45,6 +45,21 @@
       </div>
     </div>
   </div>
+  <div
+    class="d-flex justify-content-center text-center fixed-bottom pt-5 mb-5"
+    style="background-color: #C9184A"
+  ></div>
+  <div class="d-flex justify-content-center text-center fixed-bottom mb-5">
+    <p class="pt-5 text-light">{{ petInfo.kind }}</p>
+    <img
+      src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
+      class="rounded-circle mb-3 mx-5"
+      alt="Cinque Terre"
+      height="70"
+      width="80"
+    />
+    <p class="pt-5 text-light">{{ petInfo.subkind }}</p>
+  </div>
   <BottomNavBar />
 </template>
 
@@ -65,6 +80,11 @@ export default {
   data() {
     return {
       token: "",
+      petInfo: {
+        img: "",
+        kind: "Perro",
+        subkind: "Pichichu",
+      },
       pets: [
         {
           petName: "Perro facha",
