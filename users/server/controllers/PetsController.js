@@ -145,7 +145,6 @@ class PetsController {
 
       pet.name = req.body.name;
       pet.age = req.body.age;
-      pet.img = req.body.img;
       pet.kind = req.body.kind;
       pet.subkind = req.body.subkind;
       pet.tags = req.body.tags;

@@ -67,8 +67,20 @@ class AuthController {
 		passport.authenticate('jwt', { session: false }, async (err, payload) => {
 			if (payload == false) return res.status(401).send({ message: 'Sin autorización' });
 
-	    const newInfo = req.body;
+	    let newInfo = req.body;
 		console.log(req.body);
+		if(req.body.password){
+			await bcrypt.hash(req.body.password, 1)
+			.then( (hash) => {
+				newInfo.password = hash;
+			})
+			.catch (error => {
+				console.error(error.message, 'updateUser');
+				return res.status(400).json({
+					message: error
+				});
+			})
+		}
 	    try {
 	      await User.findByIdAndUpdate(payload.user._id, newInfo, {returnDocument : 'after'})
 		  .then(updated => {
