@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center mt-5">
     <img
       class="mb-4 rounded"
       src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
@@ -126,7 +126,9 @@ export default {
   components: { BottomNavBar, EditProfile, EditPet },
   created() {
     this.token = localStorage.getItem("t");
-    console.log("token",this.token);
+    if (this.token == null) {
+      this.$router.push("/login");
+    }
     this.getUser();
     this.petName ? (this.create = false) : (this.create = true);
   },
@@ -145,7 +147,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
+        .get("http://" + import.meta.env.VITE_API_USERS + "/users/user", {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -165,11 +167,14 @@ export default {
     },
     getPet() {
       axios
-        .get("http://"+import.meta.env.VITE_API_USERS +"/pets/all/" + this.id, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
-        })
+        .get(
+          "http://" + import.meta.env.VITE_API_USERS + "/pets/all/" + this.id,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
         .then((res) => {
           let data = res.data;
           console.log("petData", data);
