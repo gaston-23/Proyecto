@@ -150,6 +150,7 @@ class PetsController {
       pet.subkind = req.body.subkind;
       pet.tags = req.body.tags;
       pet.owner = payload.user._id;
+      pet.sex = req.body.sex;
       console.log("req",req.body);
 
       pet.img = '';

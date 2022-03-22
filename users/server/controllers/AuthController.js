@@ -117,6 +117,8 @@ class AuthController {
 		user.name = req.body.name;
 		user.surname = req.body.surname;
 		user.email = req.body.email;
+		user.tel = req.body.tel;
+		user.description = req.body.description;
 		user.img = 'null';
 
 		if (!req.body.password) {
