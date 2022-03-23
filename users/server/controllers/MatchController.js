@@ -64,15 +64,28 @@ class MatchController {
 		if (payload == false) return res.status(401).send({ message: 'Sin autorización' });
 
 	    console.log(req.body);
+		let like = new Like();
 		if(req.body.like){
-			let like = new Like();
 			like.user	= req.body.user;
 			like.pet	= req.body.pet;
 			like.time	= moment();
 			like.owner	= payload.user._id;
+			
+			 
 			await like.save()
 			.then(saved => {
+				User.findByIdAndUpdate( //no probado
+					{ _id: req.body.user },
+					{ $addToSet: { likes: saved._id } }
+				  )
+					.then((updated) => {
+						console.log('like asignado ',updated);
+					})
+					.catch((error) => {
+					  console.log(error);
+					});
 				//verificar si tiene un like y devolver match
+				
 				return res.status(200).json(saved)
 			})
 			.catch( error => {
