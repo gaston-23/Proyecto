@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 
 import AuthRoutes from './server/routes/AuthRoutes'; 
 import PetsRoutes from './server/routes/PetsRoutes';
+import MatchRoutes from './server/routes/MatchRoutes';
 
 
 const app = express();
@@ -39,6 +40,8 @@ mongoose.connect('mongodb://localhost:27017/tinderpets', (err,res)=>{
  * */
 app.use('/users/', AuthRoutes);
 app.use('/pets/', PetsRoutes);
+app.use('/match/', MatchRoutes);
+
 
 // when a random route is inputed
 app.get('*', (req, res) => {

@@ -146,13 +146,16 @@ class PetsController {
 
       pet.name = req.body.name;
       pet.age = req.body.age;
-      pet.img = req.body.img;
       pet.kind = req.body.kind;
       pet.subkind = req.body.subkind;
       pet.tags = req.body.tags;
+      pet.owner = payload.user._id;
+      pet.sex = req.body.sex;
       console.log("req",req.body);
 
-      pet
+      pet.img = '';
+
+      await pet
         .save()
         .then((petStored) => {
           console.log(petStored);
@@ -172,7 +175,8 @@ class PetsController {
 
                 // guardar imagen
                 profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
-                petStored.update({ img: uniq_foto })
+                pet.img = uniq_foto ;
+                pet._id = petStored._id;
 
 
                 // optimizar
@@ -184,22 +188,6 @@ class PetsController {
                 resizeOptimizeImages(opts);
               }
             }
-            User.findByIdAndUpdate(
-              { _id: payload.user._id },
-              { $addToSet: { pets: petStored._id } }
-            )
-              .then((updated) => {
-                return res.status(200).send({
-                  user: updated,
-                  newPet: petStored,
-                });
-              })
-              .catch((error) => {
-                // error al actualizar
-                return res.status(400).json({
-                  message: `Error al asignar la mascota al usuario (#${payload.user._id})`,
-                });
-              });
           }
         })
         .catch((error) => {
@@ -208,6 +196,13 @@ class PetsController {
             message: "Error al guardar mascota",
           });
         });
+
+      await pet.save()
+
+      return res.status(200).send({
+        user: payload.user,
+        newPet: pet,
+      });
     })(req, res);
   }
 

@@ -3,12 +3,9 @@ require('dotenv').config();
 import Pet from '../models/pet';
 import Like from '../models/like';
 
-import auth from '../passport';
 
 import passport from 'passport';
 
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import moment from 'moment';
 
 
@@ -25,6 +22,27 @@ class MatchController {
 			
 			try {
 				let pets = await Pet.find( {kind: req.body.kind} );
+				pets = pets.map(el => {
+					let w = 0;
+					w += el.subkind == req.body.subkind ? 20 : 0;
+					w -= Math.abs(el.age - req.body.age) ;
+					el.tags.forEach(element => {
+						w += req.body.tags.some(element)? 3 : 0;
+					});
+					el.w = w;
+					if (el._id != req.body._id) {
+						return el;
+					}
+				}).sort(function (a, b) {
+					if (a.w > b.w) {
+					  return 1;
+					}
+					if (a.w < b.w) {
+					  return -1;
+					}
+					// a must be equal to b
+					return 0;
+				  });
 				console.log(pets);
 				return res.status(200).json(pets);
 			}
@@ -54,7 +72,7 @@ class MatchController {
 			like.owner	= payload.user._id;
 			await like.save()
 			.then(saved => {
-				
+				//verificar si tiene un like y devolver match
 				return res.status(200).json(saved)
 			})
 			.catch( error => {
@@ -85,65 +103,6 @@ class MatchController {
 	}
 
 
-	/**
-	 * Registro
-	 * @return {json}
-	 */
-	 static async signin(req, res, next) {
-		console.log(req.body);
-		
-
-		let user = new User();
-
-		user.name = req.body.name;
-		user.surname = req.body.surname;
-		user.email = req.body.email;
-		user.img = 'null';
-
-		if (!req.body.password) {
-			return res.status(400).send({
-				message: 'No ha ingresado datos validos',
-			});
-		}else{
-			console.log(req.body.password);
-			await bcrypt.hash(req.body.password, 1)
-			.then( (hash) => {
-				user.password = hash;
-				if(user.name != null && user.surname != null && user.email != null){
-					//save user
-					user.save((err,userStored) =>{
-						console.log(userStored);
-						if(err){
-							return res.status(400).send({
-								message: 'Error al guardar usuario',
-							});
-						}else{
-							if(!userStored){
-								return res.status(404).send({
-									message: 'Error al registrar el usuario',
-								});
-							}else{
-								return res.status(200).send({
-									token: jwt.sign({ user: userStored }, process.env.JWT_SECRET), // probar si permite crear usuario, sino, eliminar
-									user: userStored,
-								});
-							}
-						}
-					})
-				}else{
-					return res.status(400).send({
-						message: 'No ha ingresado datos validos',
-					});
-				}
-			})
-			.catch(err=>{
-				console.log(err);
-				return res.status(400).send({
-					message: 'No ha ingresado datos validos',
-				});
-			})
-		}
-	}
 	
 
 }

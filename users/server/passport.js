@@ -32,8 +32,9 @@ const jwtExtract = passportJWT.ExtractJwt;
               
               bcrypt.compare(password, userF.password)
               .then((check)=>{
-                
-                return done(null, userF);
+                console.log(check);
+                if(check) return done(null, userF);
+                else return done(null, false, 'Contraseña inválida');
               })
               .catch(error=>{
                 console.log(error);

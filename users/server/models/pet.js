@@ -8,6 +8,7 @@ var PetSchema = schema({
     name: String,
     age: Number,
     img: String,
+    sex: String,
     kind: String,
     subkind: String,
     tags: Array,
