@@ -151,6 +151,7 @@ class PetsController {
       pet.tags = req.body.tags;
       pet.owner = payload.user._id;
       pet.sex = req.body.sex;
+      pet.description = req.body.description;
       console.log("req",req.body);
 
       pet.img = '';
