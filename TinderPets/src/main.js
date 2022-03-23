@@ -13,6 +13,7 @@ import Matches from './components/Matches.vue';
 // Rutas de la aplicacion
 const routes = [
     { path: '/', component: Register },
+    { path: '/register', component: Register },
     { path: '/login', component: Login },
     { path: '/home', component: Carousel },
     { path: '/profile', component: Profile },

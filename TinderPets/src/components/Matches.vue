@@ -1,4 +1,7 @@
 <template>
+  <div class="mt-5 text-center" style="background-color: #c9184a">
+    <h3 class="text-light p-2"><i class="fa-solid mx-2"></i>Parejas</h3>
+  </div>
   <div v-for="match in matches" class="card mb-5 mt-5" style="max-width: 540px">
     <div class="row g-0">
       <div class="col-5">

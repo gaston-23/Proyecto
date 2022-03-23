@@ -1,10 +1,9 @@
 <template lang="">
 <div class="container-fluid">
-  <div class="pt-5" style="background-color:#FFF0F3; width: 18rem;">
-      <div class="text-center" style="color: #800F2F;">
-          <h1><i class="fa-solid fa-xl"></i></h1>
+        <div class="text-center pt-5" style="color: #800F2F;">
+          <h1><i class="fa-solid fa-xl pt-5"></i></h1>
       </div>
-    <div class="pt-5 pl-3">
+          <div class="pt-5 pl-3">
       <form>
           <div class="form-floating mb-3">
     <input type="text" class="form-control" id="floatingInput" v-model="name">
@@ -25,11 +24,11 @@
       </form>
             <div class="text-center">
           <button @click="register" class="btn text-light mt-4" style="background-color:#800F2F">Registrarse</button>
+          <br>
+          <button @click="goLogin" class="btn text-dark mt-3" style="background-color:#FFF0F3">¿Ya tenés cuenta? Iniciá sesión</button>
           <!-- <router-link to="/home">Sumbit</router-link> -->
         </div>
     </div>
-
-  </div>
 </div>
 
 
@@ -56,6 +55,9 @@ export default {
         this.$router.push("/home");
       }
     },
+    goLogin() {
+      this.$router.push("/login");
+    },
     register() {
       axios
         .post("http://" + import.meta.env.VITE_API_USERS + "/users/signin", {
@@ -70,7 +72,7 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-          alert("Debe completar todos los campos")
+          alert("Debe completar todos los campos");
         });
     },
   },

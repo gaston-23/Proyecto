@@ -1,7 +1,11 @@
 <template>
+  <div class="mt-5 text-center" style="background-color: #c9184a">
+    <h3 class="text-light p-2"><i class="fa-solid mx-2"></i>Explorar</h3>
+  </div>
   <div
+    v-if="petInfo.name != ''"
     id="carouselExampleIndicators"
-    class="carousel slide mt-5"
+    class="carousel slide mt-4"
     data-ride="carousel"
     data-interval="false"
   >
@@ -45,14 +49,17 @@
       </div>
     </div>
   </div>
+  <div v-else class="text-center mt-5">
+    <h2 class="" style="color: #800f2f">¡Ingresa una mascota en el perfil para explorar!</h2>
+  </div>
   <div
     class="d-flex justify-content-center text-center fixed-bottom pt-5 mb-5"
-    style="background-color: #C9184A"
+    style="background-color: #c9184a"
   ></div>
-  <div class="d-flex justify-content-center text-center fixed-bottom mb-5">
-    <p class="pt-5 text-light">{{ petInfo.kind }}</p>
+  <div v-if="petInfo.name != ''" class="d-flex justify-content-center text-center fixed-bottom mb-5">
+    <p class="pt-5 text-light">{{ petInfo.name }}</p>
     <img
-      src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
+      :src="petInfo.img"
       class="rounded-circle mb-3 mx-5"
       alt="Cinque Terre"
       height="70"
@@ -68,22 +75,25 @@
 
 <script>
 import BottomNavBar from "./BottomNavBar.vue";
+import axios from "axios";
 
 export default {
   components: { BottomNavBar },
-  created() {
+  mounted() {
     this.token = localStorage.getItem("t");
     if (this.token == null) {
       this.$router.push("/login");
     }
+    this.getUser();
   },
   data() {
     return {
       token: "",
+      id: "",
       petInfo: {
         img: "",
-        kind: "Perro",
-        subkind: "Pichichu",
+        name: "",
+        subkind: "",
       },
       pets: [
         {
@@ -116,6 +126,48 @@ export default {
       } else {
         return "";
       }
+    },
+    getUser() {
+      axios
+        .get("http://" + import.meta.env.VITE_API_USERS + "/users/user", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((res) => {
+          let data = res.data;
+          this.id = data._id;
+          this.getPet();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    getPet() {
+      axios
+        .get(
+          "http://" + import.meta.env.VITE_API_USERS + "/pets/all/" + this.id,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          let data = res.data[0];
+          if (data == null) {
+            alert(
+              "¡No tienes ninguna mascota creada! Ingresa una para continuar"
+            );
+            this.$router.push("/profile");
+          }
+          this.petInfo.name = data.name;
+          this.petInfo.subkind = data.subkind;
+          this.petInfo.img = import.meta.env.VITE_IMAGES + data.img;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
 };
