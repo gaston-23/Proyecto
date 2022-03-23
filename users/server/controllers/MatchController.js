@@ -86,7 +86,7 @@ class MatchController {
 					});
 				//verificar si tiene un like y devolver match
 				
-				return res.status(200).json(saved)
+				return res.status(200).json({match: false, liked: saved})
 			})
 			.catch( error => {
 				// error al actualizar
