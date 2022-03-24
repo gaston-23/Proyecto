@@ -1,11 +1,9 @@
 <template lang="">
-<div class="container-fluid">
-  <div class="pt-5" style="background-color:#FFF0F3; width: 18rem;">
-      <div class="text-center" style="color: #800F2F;">
-          <h1><i class="fa-solid fa-xl"></i></h1>
+<div class="container">
+  <div class="text-center pt-5" style="color: #800F2F;">
+          <h1><i class="fa-solid fa-xl pt-5"></i></h1>
       </div>
-    <div class="pt-5 pl-3">
-      <form>
+          <div class="pt-5">
   <div class="form-floating mb-3">
     <input type="email" class="form-control" id="floatingInput" v-model="email">
     <label for="floatingInput">Email</label>
@@ -14,14 +12,13 @@
     <input type="password" class="form-control" id="floatingPassword" v-model="pass">
     <label for="floatingPassword">Contraseña</label>
   </div>
-      </form>
             <div class="text-center">
-          <button @click="login" class="btn text-light mt-4" style="background-color:#800F2F">Ingresar</button>
+          <button @click="login" class="btn text-light mt-4" style="background-color:#800F2F">Iniciar Sesión</button>
+                    <br>
+          <button @click="goRegister" class="btn text-dark mt-3" style="background-color:#FFF0F3">¿No tenés cuenta? Registrarse</button>
           <!-- <router-link to="/home">Sumbit</router-link> -->
         </div>
     </div>
-
-  </div>
 </div>
 
 
@@ -43,6 +40,9 @@ export default {
     };
   },
   methods: {
+    goRegister() {
+      this.$router.push("/register");
+    },
     login() {
       console.log(this.email, this.pass);
       axios
@@ -56,7 +56,7 @@ export default {
           // Gurdamos el token de ingreso en la cache local
           localStorage.setItem("t", token);
           console.log(token);
-          this.$router.push("/home");
+          this.$router.push("/profile");
         })
         .catch(function (error) {
           console.log(error);

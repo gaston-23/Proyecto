@@ -1,8 +1,11 @@
 <template>
-  <div class="text-center mt-5">
+  <div class="mt-5 text-center" style="background-color: #c9184a">
+    <h3 class="text-light p-2"><i class="fa-solid mx-2"></i>Perfil</h3>
+  </div>
+  <div class="text-center mt-4">
     <img
       class="mb-4 rounded"
-      src="https://www.thekennelclub.org.uk/media/4981/crufts-dog-5.jpg?mode=crop&width=800&height=600&rnd=132908581180000000"
+      :src="petImg"
       width="200"
       height="200"
       alt=""
@@ -56,6 +59,7 @@
         placeholder="Nombre mascota"
         aria-label="Nombre mascota"
         aria-describedby="basic-addon1"
+        v-model="petName"
         disabled
       />
     </div>
@@ -91,6 +95,7 @@
       style="background: #800f2f"
       data-toggle="modal"
       data-target="#staticBackdrop"
+      @click="create = true"
     >
       <i class="fa-solid mr-2"></i>Editar
     </button>
@@ -101,6 +106,7 @@
       data-toggle="modal"
       data-target="#petModal"
       v-if="petName"
+      @click="create = false"
     >
       <i class="fa-solid mr-2"></i>Editar Mascota
     </button>
@@ -110,7 +116,7 @@
 
   <EditProfile />
 
-  <EditPet :create="create" />
+  <EditPet :create="create"/>
 </template>
 
 <style scoped>
@@ -176,8 +182,10 @@ export default {
           }
         )
         .then((res) => {
-          let data = res.data;
-          console.log("petData", data);
+          let data = res.data[0];
+          this.petName = data.name;
+          this.petImg = import.meta.env.VITE_IMAGES+data.img;
+          console.log("images",this.petImg);
         })
         .catch((error) => {
           console.error(error);

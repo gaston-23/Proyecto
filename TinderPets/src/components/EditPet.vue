@@ -84,7 +84,7 @@
             type="button"
             class="btn text-light"
             style="background: #800f2f"
-            @click="this.create ? this.createPet() : this.updatePetInfo"
+            @click="this.create ? this.createPet() : this.updatePetInfo()"
           >
             Confirmar
           </button>
@@ -102,14 +102,14 @@ import axios from "axios";
 
 export default {
   props: ["create"],
-  created() {
-    this.token = localStorage.getItem("t");
-    console.log(this.token);
+  mounted() {
+    this.pet.token = localStorage.getItem("t");
+    this.getUser();
   },
   data() {
     return {
       pet: {
-        user_id: "",
+        id: "",
         name: "Roco",
         age: "6",
         img: "",
@@ -118,7 +118,6 @@ export default {
         description: "Buenaso este perro, seguro se lleva bien con tu perra",
         token: "",
       },
-      token: "",
     };
   },
   methods: {
@@ -130,44 +129,61 @@ export default {
       formData.append("subkind", this.pet.subkind);
       formData.append("tags", ["perro"]);
       formData.append("profile", imageFile.files[0]);
-      console.log(formData);
       axios
-        .post("http://"+import.meta.env.VITE_API_USERS +"/pets/add", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${this.token}`,
-          },
-        })
+        .post(
+          "http://" + import.meta.env.VITE_API_USERS + "/pets/add",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.pet.token}`,
+            },
+          }
+        )
         .then((response) => {
-          console.log(response);
+          console.log("Creado con exito");
+          location.reload();
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    getPetInfo() {
+    getUser() {
       axios
-        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
+        .get("http://" + import.meta.env.VITE_API_USERS + "/users/user", {
           headers: {
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${localStorage.getItem("t")}`,
           },
         })
         .then((res) => {
           let data = res.data;
           this.user_id = data._id;
+          this.getPetInfo();
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+    getPetInfo() {
       axios
-        .get("http://"+import.meta.env.VITE_API_USERS +"/pets/single/" + this.user_id, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
-        })
+        .get(
+          "http://" +
+            import.meta.env.VITE_API_USERS +
+            "/pets/all/" +
+            this.user_id,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("t")}`,
+            },
+          }
+        )
         .then((res) => {
-          let data = res.data;
-          console.log(data);
+          let data = res.data[0];
+          this.pet.id = data._id;
+          this.pet.name = data.name;
+          this.pet.img = data.img;
+          this.pet.kind = data.kind;
+          this.pet.subkind = data.subkind;
         })
         .catch((error) => {
           console.error(error);
@@ -176,7 +192,10 @@ export default {
     updatePetInfo() {
       axios
         .put(
-          "http://"+import.meta.env.VITE_API_USERS +"5001/pets/add",
+          "http://" +
+            import.meta.env.VITE_API_USERS +
+            "/pets/update/" +
+            this.pet.id,
           {
             name: this.pet.name,
             age: this.pet.age,
@@ -184,12 +203,13 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${this.token}`,
+              Authorization: `Bearer ${localStorage.getItem("t")}`,
             },
           }
         )
         .then((response) => {
-          console.log(response);
+          console.log("Actualizado con éxito");
+          location.reload();
         })
         .catch(function (error) {
           console.log(error);
