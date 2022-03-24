@@ -4,11 +4,12 @@
   </div>
   <div class="text-center mt-4">
     <img
+      v-if="petImg != ''"
       class="mb-4 rounded"
       :src="petImg"
       width="200"
       height="200"
-      alt=""
+      alt="profile"
     />
   </div>
   <div>
@@ -83,6 +84,7 @@
         aria-label="Descripción"
         aria-describedby="basic-addon1"
         disabled
+        v-model="description"
       />
     </div>
   </div>
@@ -116,7 +118,7 @@
 
   <EditProfile />
 
-  <EditPet :create="create"/>
+  <EditPet :create="create" />
 </template>
 
 <style scoped>
@@ -145,6 +147,7 @@ export default {
       lastname: "",
       petName: "",
       description: "",
+      petImg: "",
       // Esta propiedad indica si estamos creando una mascota o no
       create: true,
       token: "",
@@ -184,8 +187,9 @@ export default {
         .then((res) => {
           let data = res.data[0];
           this.petName = data.name;
-          this.petImg = import.meta.env.VITE_IMAGES+data.img;
-          console.log("images",this.petImg);
+          this.petImg = import.meta.env.VITE_IMAGES + data.img;
+          this.description = data.description;
+          console.log("images", this.petImg);
         })
         .catch((error) => {
           console.error(error);

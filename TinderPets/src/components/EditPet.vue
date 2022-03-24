@@ -126,9 +126,11 @@ export default {
       let imageFile = document.querySelector("#file");
       formData.append("name", this.pet.name);
       formData.append("age", this.pet.age);
+      formData.append("kind", this.pet.kind);
       formData.append("subkind", this.pet.subkind);
       formData.append("tags", ["perro"]);
       formData.append("profile", imageFile.files[0]);
+      formData.append("description", this.pet.description);
       axios
         .post(
           "http://" + import.meta.env.VITE_API_USERS + "/pets/add",
@@ -179,17 +181,28 @@ export default {
         )
         .then((res) => {
           let data = res.data[0];
+          console.log(data);
           this.pet.id = data._id;
           this.pet.name = data.name;
           this.pet.img = data.img;
           this.pet.kind = data.kind;
           this.pet.subkind = data.subkind;
+          this.pet.description = data.description;
         })
         .catch((error) => {
           console.error(error);
         });
     },
     updatePetInfo() {
+      let formData = new FormData();
+      let imageFile = document.querySelector("#file");
+      formData.append("name", this.pet.name);
+      formData.append("age", this.pet.age);
+      formData.append("kind", this.pet.kind);
+      formData.append("subkind", this.pet.subkind);
+      formData.append("tags", ["perro"]);
+      formData.append("profile", imageFile.files[0]);
+      formData.append("description", this.pet.description);
       axios
         .put(
           "http://" +
@@ -197,9 +210,7 @@ export default {
             "/pets/update/" +
             this.pet.id,
           {
-            name: this.pet.name,
-            age: this.pet.age,
-            subkind: this.pet.subkind,
+            formData,
           },
           {
             headers: {

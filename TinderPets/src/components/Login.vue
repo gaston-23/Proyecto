@@ -57,6 +57,7 @@ export default {
           localStorage.setItem("t", token);
           console.log(token);
           this.$router.push("/profile");
+          location.reload();
         })
         .catch(function (error) {
           console.log(error);

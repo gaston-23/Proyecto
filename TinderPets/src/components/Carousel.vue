@@ -18,7 +18,7 @@
           <img
             :src="pet.image"
             class="card-img-top"
-            alt="..."
+            alt="Profile"
             height="200"
             width="200"
           />
@@ -61,7 +61,7 @@
     <img
       :src="petInfo.img"
       class="rounded-circle mb-3 mx-5"
-      alt="Cinque Terre"
+      alt="Profile"
       height="70"
       width="80"
     />
