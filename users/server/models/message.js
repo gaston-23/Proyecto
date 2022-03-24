@@ -6,7 +6,7 @@ var schema = mongoose.Schema;
 
 var MessageSchema = schema({
     destiny: {type: Schema.ObjectId, ref: 'User'},
-    msg: Text,
+    msg: String,
     time: Date,
     owner: {type: schema.ObjectId, ref: 'User'}
 });

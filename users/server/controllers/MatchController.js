@@ -16,9 +16,9 @@ class MatchController {
 	 * Obtener sugerencias de match de acuerdo con la raza y subraza
 	 * @return {json}
 	 */
-	 static async getSuggestion(req, res, next) {
+	 static async getSuggestion(req, res) {
 		passport.authenticate('jwt', { session: false }, async (err, payload) => {
-			if (payload == false) return res.status(401).send({ message: 'Sin autorización' });
+			if (!payload ) return res.status(401).send({ message: 'Sin autorización' });
 			
 			try {
 				let pets = await Pet.find( {kind: req.body.kind} );
@@ -61,7 +61,7 @@ class MatchController {
 	 */
 	static async setLike(req, res) {
 	  passport.authenticate('jwt', { session: false }, async (err, payload) => {
-		if (payload == false) return res.status(401).send({ message: 'Sin autorización' });
+		if (!payload) return res.status(401).send({ message: 'Sin autorización' });
 
 	    console.log(req.body);
 		let like = new Like();
@@ -74,19 +74,30 @@ class MatchController {
 			 
 			await like.save()
 			.then(saved => {
-				User.findByIdAndUpdate( //no probado
+				let matched = User.findByIdAndUpdate( //no probado
 					{ _id: req.body.user },
 					{ $addToSet: { likes: saved._id } }
 				  )
 					.then((updated) => {
 						console.log('like asignado ',updated);
+						let user = User.findById(payload.user._id);
+						user.likes.forEach(l => {
+							if(l.user == req.body.user ){
+								if (setMatch(req.body.user,payload.user._id,req.body.pet)) return true
+								else{
+									console.log('Error en matcheo');
+									return false
+								}
+							}
+						});
+						return false
 					})
 					.catch((error) => {
 					  console.log(error);
 					});
 				//verificar si tiene un like y devolver match
 				
-				return res.status(200).json({match: false, liked: saved})
+				return res.status(200).json({match: matched, liked: saved})
 			})
 			.catch( error => {
 				// error al actualizar
@@ -115,6 +126,78 @@ class MatchController {
 	  })(req, res);
 	}
 
+	/**
+	 * Like usuario
+	 * @return {json}
+	 */
+	 static async setMatch(user1, user2) {
+		  
+		let match1 = new Match();
+		match1.user = user2;
+		match1.time = moment.now();
+		match1.owner = user1;
+
+		let flag1 = await match1.save()
+			.then( saved => {
+				User.findByIdAndUpdate( //no probado
+					  { _id: user1 },
+					  { $addToSet: { match: saved._id } }
+					)
+					  .then((updated) => {
+						  console.log('match asignado ',updated);
+						  return true;
+					  })
+					  .catch((error) => {
+						console.log(error);
+						return false;
+					  });
+			})
+
+		let match2 = new Match();
+		match2.user = user1;
+		match2.time = moment.now();
+		match2.owner = user2;
+
+		let flag2 = await match2.save()
+			.then( saved => {
+				User.findByIdAndUpdate( //no probado
+					{ _id: user2 },
+					{ $addToSet: { match: saved._id } }
+				)
+					.then((updated) => {
+						console.log('match asignado ',updated);
+						return true
+					})
+					.catch((error) => {
+						console.log(error);
+						return false
+					});
+			})
+		return flag1 && flag2;
+	  }
+
+	/**
+	 * Obtener los match del usuario
+	 * @return {json}
+	 */
+	 static async getMatches(req, res) {
+		passport.authenticate('jwt', { session: false }, async (err, payload) => {
+			if (!payload) return res.status(401).send({ message: 'Sin autorización' });
+			
+			try {
+				let matches = await Match.find( {owner: payload.user._id} );
+				
+				console.log(matches);
+				return res.status(200).json(matches);
+			}
+			catch (error) {
+				console.error(error.message, 'getMatches');
+				return res.status(400).json({
+					message: 'Error al obtener matches',
+				});
+			}
+		})(req, res);
+	}
 
 	
 

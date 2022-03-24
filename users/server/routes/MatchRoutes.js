@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/getSuggestion', MatchController.getSuggestion);
 router.post('/like', MatchController.setLike);
-// router.get('/user', AuthController.getUser);
+router.get('/match', MatchController.getMatches);
 // router.put('/user', AuthController.updateUser);
 
 
