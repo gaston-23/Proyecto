@@ -12,7 +12,7 @@ var PetSchema = schema({
     kind: String,
     subkind: String,
     tags: Array,
-    description: Text,
+    description: String,
     owner: {type: schema.ObjectId, ref: 'User'}
 });
 
