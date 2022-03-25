@@ -104,7 +104,7 @@ class MatchController {
 			.catch( error => {
 				// error al actualizar
 				return res.status(400).json({
-					message: `Error al actualizar información de usuario (#${user_id})`
+					message: `Error al actualizar información de usuario (#${ payload.user._id})`
 				});
 			});
 		}else{
@@ -121,7 +121,7 @@ class MatchController {
 				// error al actualizar
 				console.log('puto el que lee');
 				return res.status(400).json({
-					message: `Error al actualizar información de usuario (#${user_id})`
+					message: `Error al actualizar información de usuario (#${ payload.user._id})`
 				});
 			});
 		}
