@@ -85,7 +85,7 @@ class MatchController {
 				  )
 					.then((found) => {
 						console.log('like asignado ',found);
-						if (MatchController.setMatch(req.body.user,payload.user._id,req.body.pet)) return true
+						if (MatchController.setMatch(req.body.user,payload.user._id,req.body.pet,req.body.petOwn)) return true
 						else{
 							console.log('Error en matcheo');
 							return false
@@ -130,12 +130,14 @@ class MatchController {
 	 * Like usuario
 	 * @return {json}
 	 */
-	 static async setMatch(user1, user2) {
+	 static async setMatch(user1, user2,pet,petOwn) {
 		  
 		let match1 = new Match();
 		match1.user = user2;
 		match1.time = moment.now();
 		match1.owner = user1;
+		match1.pet = petOwn;
+		match1.petMatched = pet;
 
 		console.log("match1",match1);
 
@@ -160,6 +162,8 @@ class MatchController {
 		match2.user = user1;
 		match2.time = moment.now();
 		match2.owner = user2;
+		match2.pet = pet;
+		match2.petMatched = petOwn;
 
 		let flag2 = await match2.save()
 			.then( saved => {
@@ -188,7 +192,7 @@ class MatchController {
 			if (!payload) return res.status(401).send({ message: 'Sin autorización' });
 			
 			try {
-				let matches = await Match.find( {owner: payload.user._id} ).populate();
+				let matches = await Match.find( {owner: payload.user._id} ).populate('user');
 				
 				console.log(matches);
 				return res.status(200).json(matches);
