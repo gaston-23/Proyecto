@@ -119,6 +119,7 @@ class MatchController {
 			})
 			.catch( error => {
 				// error al actualizar
+				console.log('puto el que lee');
 				return res.status(400).json({
 					message: `Error al actualizar información de usuario (#${user_id})`
 				});
