@@ -227,14 +227,12 @@ export default {
     like(liked,user,pet) {
       
       let bodyForm = new FormData();
-      let like = {
-        user	: user,
-			  pet	: pet,
-      }
+      bodyForm.append('user',user)
+      bodyForm.append('pet',pet)
       if (liked) {
-        bodyForm.append('like',like)
+        bodyForm.append('like',true)
       }else{
-        bodyForm.append('dislike',like)
+        bodyForm.append('dislike',true)
       }
       
 
