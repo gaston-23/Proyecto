@@ -10,7 +10,7 @@
           width="150"
           height="100"
           class="rounded-start m-0 p-0"
-          alt="..."
+          alt="profile"
         />
       </div>
       <div class="col-7">
