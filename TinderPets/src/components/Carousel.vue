@@ -17,7 +17,7 @@
       >
         <div class="card" style="">
           <img
-            :src="pet.image"
+            :src="rutaImages + pet.image"
             class="card-img-top"
             alt="Profile"
             height="200"
@@ -84,6 +84,11 @@ import BottomNavBar from "./BottomNavBar.vue";
 import axios from "axios";
 
 export default {
+  computed : {
+    rutaImages() {
+      return import.meta.env.VITE_IMAGES;
+    }
+  },
   components: { BottomNavBar },
   mounted() {
     this.token = localStorage.getItem("t");
@@ -236,8 +241,8 @@ export default {
       axios
         .post(
           "http://" + import.meta.env.VITE_API_USERS + "/match/like/" ,
-          {
             bodyForm,
+            {
             headers: {
               Authorization: `Bearer ${this.token}`,
             },

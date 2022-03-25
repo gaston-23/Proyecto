@@ -152,53 +152,57 @@ class PetsController {
       pet.owner = payload.user._id;
       pet.sex = req.body.sex;
       pet.description = req.body.description;
-      console.log("req",req.body);
+      console.log("req", req.body);
 
       pet.img = '';
 
-      await pet
-        .save()
-        .then((petStored) => {
-          console.log(petStored);
-          if (!petStored) {
-            return res.status(404).send({
-              message: "Error al registrar la mascota",
-            });
-          } else {
-            // subir imagenes
-            if (!!req.files.profile) {
-              // -> foto
-              console.log(req.files, req.files.profile);
-              if (req.files.profile) {
-                let profileFoto = req.files.profile;
-                // nombre unico
-                let uniq_foto = `${(new Date).getTime()}-${petStored._id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
+      try {
+        await pet
+          .save()
+          .then((petStored) => {
+            console.log(petStored);
+            if (!petStored) {
+              return res.status(404).send({
+                message: "Error al registrar la mascota",
+              });
+            } else {
+              // subir imagenes
+              if (!!req.files.profile) {
+                // -> foto
+                console.log(req.files, req.files.profile);
+                if (req.files.profile) {
+                  let profileFoto = req.files.profile;
+                  // nombre unico
+                  let uniq_foto = `${(new Date).getTime()}-${petStored._id}-${profileFoto.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
 
-                // guardar imagen
-                profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
-                pet.img = uniq_foto ;
-                pet._id = petStored._id;
+                  // guardar imagen
+                  profileFoto.mv(`${process.env.IMG_DIR_LOGOS}${uniq_foto}`);
+                  pet.img = uniq_foto;
+                  pet._id = petStored._id;
 
 
-                // optimizar
-                const opts = {
-                  images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
-                  width: 600,
-                  quality: 90
-                };
-                resizeOptimizeImages(opts);
+                  // optimizar
+                  const opts = {
+                    images: [`${process.env.IMG_DIR_LOGOS}${uniq_foto}`],
+                    width: 600,
+                    quality: 90
+                  };
+                  resizeOptimizeImages(opts);
+                }
               }
             }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          return res.status(400).send({
-            message: "Error al guardar mascota",
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(400).send({
+              message: "Error al guardar mascota",
+            });
           });
-        });
 
-      await pet.save()
+        await pet.save()
+      } catch (error) {
+        console.log("Error al guardar la mascota");
+      }
 
       return res.status(200).send({
         user: payload.user,
