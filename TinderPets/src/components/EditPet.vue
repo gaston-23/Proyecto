@@ -67,7 +67,7 @@
               placeholder="Descripción"
               aria-label="Descripción"
               aria-describedby="basic-addon1"
-              :value="pet.description"
+              v-model="pet.description"
             />
           </div>
           <div class="mb-3 text-center">
@@ -110,12 +110,12 @@ export default {
     return {
       pet: {
         id: "",
-        name: "Roco",
-        age: "6",
+        name: "",
+        age: "",
         img: "",
-        kind: "Perro",
-        subkind: "Pichichu",
-        description: "Buenaso este perro, seguro se lleva bien con tu perra",
+        kind: "",
+        subkind: "",
+        description: "",
         token: "",
       },
     };
@@ -183,11 +183,13 @@ export default {
           let data = res.data[0];
           console.log(data);
           this.pet.id = data._id;
+          this.pet.age = data.age;
           this.pet.name = data.name;
           this.pet.img = data.img;
           this.pet.kind = data.kind;
           this.pet.subkind = data.subkind;
           this.pet.description = data.description;
+          console.log(this.pet.name);
         })
         .catch((error) => {
           console.error(error);
@@ -201,7 +203,7 @@ export default {
       formData.append("kind", this.pet.kind);
       formData.append("subkind", this.pet.subkind);
       formData.append("tags", ["perro"]);
-      formData.append("profile", imageFile.files[0]);
+      //formData.append("profile", imageFile.files[0]);
       formData.append("description", this.pet.description);
       axios
         .put(
@@ -209,9 +211,7 @@ export default {
             import.meta.env.VITE_API_USERS +
             "/pets/update/" +
             this.pet.id,
-          {
             formData,
-          },
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("t")}`,

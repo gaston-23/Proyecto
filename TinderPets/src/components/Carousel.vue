@@ -229,6 +229,7 @@ export default {
       let bodyForm = new FormData();
       bodyForm.append('user',user)
       bodyForm.append('pet',pet)
+      bodyForm.append('petOwn',this.petInfo._id)
       if (liked) {
         bodyForm.append('like',true)
       }else{

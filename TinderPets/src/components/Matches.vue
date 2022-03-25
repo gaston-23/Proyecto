@@ -6,7 +6,7 @@
     <div class="row g-0">
       <div class="col-5">
         <img
-          :src="match.image"
+          :src="imagesBucket + match.image"
           width="150"
           height="100"
           class="rounded-start m-0 p-0"
@@ -38,83 +38,47 @@ import axios from "axios";
 
 export default {
   components: { BottomNavBar },
+  computed: {
+    imagesBucket() {
+      return import.meta.env.VITE_IMAGES;
+    },
+  },
   created() {
     this.token = localStorage.getItem("t");
     if (this.token == null) {
       this.$router.push("/login");
     }
+    this.getMatches();
   },
   data() {
     return {
       token: "",
-      matches: [
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-        {
-          petName: "Roco",
-          image:
-            "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg?q=60",
-          phone: "2615545156",
-        },
-      ],
+      matches: [],
     };
   },
   methods: {
     getMatches() {
       axios
-        .get("http://" + import.meta.env.VITE_API_USERS + "/match/matches", {
+        .get("http://" + import.meta.env.VITE_API_USERS + "/match/match", {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
         })
         .then((res) => {
-          console.log(res);
-          this.matches.push(res.map( m =>{
-            return {
-              petName: m.name,
-              image: m.img,
-              phone: m.phone ? m.phone : '22222',
-            }
-          }))
+          console.log("data", res);
+          res.data.map((m) => {
+            console.log(m);
+            this.matches.push({
+              petName: m.pet_matched.name,
+              image: m.pet_matched.img,
+              phone: m.user.tel,
+            });
+          });
         })
         .catch((error) => {
           console.error(error);
         });
     },
-  }
+  },
 };
 </script>

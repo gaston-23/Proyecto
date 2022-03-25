@@ -18,6 +18,10 @@
     <label for="floatingInput2">Email</label>
   </div>
   <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="floatingInput2" v-model="phone">
+    <label for="floatingInput2">Teléfono</label>
+  </div>
+  <div class="form-floating mb-3">
     <input type="password" class="form-control" id="floatingPassword3" v-model="password">
     <label for="floatingPassword3">Contraseña</label>
   </div>
@@ -46,6 +50,7 @@ export default {
       name: "",
       surname: "",
       password: "",
+      phone: "",
     };
   },
   methods: {
@@ -65,6 +70,7 @@ export default {
           surname: this.surname,
           email: this.email,
           password: this.password,
+          tel: this.phone,
         })
         .then((response) => {
           console.log(response);
