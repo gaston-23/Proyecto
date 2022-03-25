@@ -96,7 +96,7 @@ export default {
         name: "",
         surname: "",
         email: "",
-        phone: "2615545156",
+        phone: "",
         token: "",
       },
     };
@@ -104,7 +104,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get("http://"+import.meta.env.VITE_API_USERS +"/users/user", {
+        .get("http://" + import.meta.env.VITE_API_USERS + "/users/user", {
           headers: {
             Authorization: `Bearer ${this.user.token}`,
           },
@@ -114,6 +114,7 @@ export default {
           this.user.email = data.email;
           this.user.name = data.name;
           this.user.surname = data.surname;
+          this.user.phone = data.tel;
         })
         .catch((error) => {
           console.error(error);
@@ -123,12 +124,13 @@ export default {
       console.log(this.user.token);
       axios
         .put(
-          "http://"+import.meta.env.VITE_API_USERS +"/users/user",
+          "http://" + import.meta.env.VITE_API_USERS + "/users/user",
           {
             name: this.user.name,
             email: this.user.email,
             surname: this.user.surname,
             email: this.user.email,
+            tel: this.user.phone,
           },
           {
             headers: {

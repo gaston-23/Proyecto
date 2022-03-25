@@ -78,17 +78,18 @@ class PetsController {
    */
   static async updatePet(req, res) {
     passport.authenticate("jwt", { session: false }, async (err, payload) => {
+      console.log("payload",payload);
       if (payload == false)
         return res.status(401).send({ message: "Sin autorización" }); //añadir que no se puedan modificar otras mascotas
 
       const newInfo = req.body;
-      console.log(req.body);
+      console.log("body",req.body);
       // subir imagenes
       if (!!req.files) {
         // -> foto
 
-        console.log(req.files.profile);
-        console.log(req.files);
+        //console.log("profile",req.files.profile);
+        //console.log(req.files);
         if (req.files.profile) {
           let profileFoto = req.files.profile;
           // nombre unico
@@ -117,6 +118,7 @@ class PetsController {
           })
           .catch((error) => {
             // error al actualizar
+            console.log(error,"updatePet");
             return res.status(400).json({
               message: `Error al actualizar información de mascota (#${req.params.id})`,
             });
