@@ -216,11 +216,25 @@ export default {
           console.error(error);
         });
     },
-    like() {
+    like(liked,user,pet) {
+      
+      let bodyForm = new FormData();
+      let like = {
+        user	: user,
+			  pet	: pet,
+      }
+      if (liked) {
+        bodyForm.append('like',like)
+      }else{
+        bodyForm.append('dislike',like)
+      }
+      
+
       axios
-        .get(
-          "http://" + import.meta.env.VITE_API_USERS + "/pets/all/" + this.id,
+        .post(
+          "http://" + import.meta.env.VITE_API_USERS + "/match/like/" ,
           {
+            bodyForm,
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
