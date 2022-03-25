@@ -137,7 +137,7 @@ class MatchController {
 		match1.time = moment.now();
 		match1.owner = user1;
 		match1.pet = petOwn;
-		match1.petMatched = pet;
+		match1.pet_matched = pet;
 
 		console.log("match1",match1);
 
@@ -163,7 +163,7 @@ class MatchController {
 		match2.time = moment.now();
 		match2.owner = user2;
 		match2.pet = pet;
-		match2.petMatched = petOwn;
+		match2.pet_matched = petOwn;
 
 		let flag2 = await match2.save()
 			.then( saved => {
