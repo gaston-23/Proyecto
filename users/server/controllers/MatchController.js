@@ -144,7 +144,7 @@ class MatchController {
 		let flag1 = await match1.save()
 			.then( saved => {
 				console.log("saved",saved);
-				User.findByIdAndUpdate( //no probado
+				return User.findByIdAndUpdate( //no probado
 					  { _id: user1 },
 					  { $addToSet: { matchs: saved._id } }
 					)
@@ -167,7 +167,7 @@ class MatchController {
 
 		let flag2 = await match2.save()
 			.then( saved => {
-				User.findByIdAndUpdate( //no probado
+				return User.findByIdAndUpdate( //no probado
 					{ _id: user2 },
 					{ $addToSet: { matchs: saved._id } }
 				)
