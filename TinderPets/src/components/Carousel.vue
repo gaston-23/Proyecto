@@ -136,13 +136,6 @@ export default {
       }
     },
     getSuggestions() {
-      console.log(          {
-            age: this.petInfo.age,
-            kind: this.petInfo.kind,
-            subkind: this.petInfo.subkind,
-            _id: this.petInfo._id,
-            tags: []
-          });
       axios
         .post(
           "http://" + import.meta.env.VITE_API_USERS + "/match/getSuggestion",
@@ -151,7 +144,7 @@ export default {
             kind: this.petInfo.kind,
             subkind: this.petInfo.subkind,
             _id: this.petInfo._id,
-            tags: []
+            tags: [],
           },
           {
             headers: {
@@ -162,6 +155,16 @@ export default {
         .then((response) => {
           console.log("Mascotas");
           console.log(response);
+          this.pets = [];
+          response.data.forEach((dog) => {
+            this.pets.push({
+              petName: dog.name,
+              description: dog.description,
+              image: dog.img,
+              owner: dog.owner,
+              _id: dog._id
+            })
+          });
         })
         .catch(function (error) {
           console.log(error);
