@@ -12,6 +12,7 @@
     <div class="carousel-inner">
       <div
         v-for="(pet, index) in pets"
+        :key="index"
         :class="'carousel-item ' + isFirst(index)"
       >
         <div class="card" style="">
@@ -213,6 +214,32 @@ export default {
           this.petInfo._id = data._id;
           this.petInfo.age = data.age;
           this.getSuggestions();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    like() {
+      axios
+        .get(
+          "http://" + import.meta.env.VITE_API_USERS + "/pets/all/" + this.id,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          let data = res.data[0];
+          if (data == null) {
+            alert(
+              "¡No tienes ninguna mascota creada! Ingresa una para continuar"
+            );
+            this.$router.push("/profile");
+          }
+          this.petInfo.name = data.name;
+          this.petInfo.subkind = data.subkind;
+          this.petInfo.img = import.meta.env.VITE_IMAGES + data.img;
         })
         .catch((error) => {
           console.error(error);
