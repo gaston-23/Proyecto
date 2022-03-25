@@ -77,26 +77,20 @@ class MatchController {
 			 
 			await like.save()
 			.then(saved => {
-				let matched = User.findByIdAndUpdate( //no probado
-					{ _id: req.body.user },
-					{ $addToSet: { likes: saved._id } }
+				let matched = Like.find( //no probado
+					{ owner: req.body.user },
+					{ user: payload.user._id }
 				  )
-					.then((updated) => {
-						console.log('like asignado ',updated);
-						let user = User.findById(payload.user._id);
-						user.likes.forEach(l => {
-							if(l.user == req.body.user ){
-								if (setMatch(req.body.user,payload.user._id,req.body.pet)) return true
-								else{
-									console.log('Error en matcheo');
-									return false
-								}
-							}
-						});
-						return false
+					.then((found) => {
+						console.log('like asignado ',found);
+						if (setMatch(req.body.user,payload.user._id,req.body.pet)) return true
+						else{
+							console.log('Error en matcheo');
+							return false
+						}
 					})
 					.catch((error) => {
-					  console.log(error);
+					  console.log('error en busquda',error);
 					});
 				//verificar si tiene un like y devolver match
 				
