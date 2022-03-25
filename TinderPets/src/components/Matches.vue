@@ -34,6 +34,7 @@
 
 <script>
 import BottomNavBar from "./BottomNavBar.vue";
+import axios from "axios";
 
 export default {
   components: { BottomNavBar },
@@ -91,5 +92,28 @@ export default {
       ],
     };
   },
+  methods: {
+    getMatches() {
+      axios
+        .get("http://" + import.meta.env.VITE_API_USERS + "/match/matches", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.matches.push(res.map( m =>{
+            return {
+              petName: m.name,
+              image: m.img,
+              phone: m.phone ? m.phone : '22222',
+            }
+          }))
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  }
 };
 </script>
