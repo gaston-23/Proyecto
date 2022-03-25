@@ -188,7 +188,7 @@ class MatchController {
 			if (!payload) return res.status(401).send({ message: 'Sin autorización' });
 			
 			try {
-				let matches = await Match.find( {owner: payload.user._id} );
+				let matches = await Match.find( {owner: payload.user._id} ).populate();
 				
 				console.log(matches);
 				return res.status(200).json(matches);
