@@ -34,14 +34,14 @@
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i class="fa-solid fa-circle-xmark"></i
+                ><i @click="dislike" class="fa-solid fa-circle-xmark"></i
               ></a>
               <a
                 class="btn btn-success"
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i class="fa-solid fa-heart"></i
+                ><i @click="like" class="fa-solid fa-heart"></i
               ></a>
             </div>
           </div>
@@ -50,13 +50,18 @@
     </div>
   </div>
   <div v-else class="text-center mt-5">
-    <h2 class="" style="color: #800f2f">¡Ingresa una mascota en el perfil para explorar!</h2>
+    <h2 class="" style="color: #800f2f">
+      ¡Ingresa una mascota en el perfil para explorar!
+    </h2>
   </div>
   <div
     class="d-flex justify-content-center text-center fixed-bottom pt-5 mb-5"
     style="background-color: #c9184a"
   ></div>
-  <div v-if="petInfo.name != ''" class="d-flex justify-content-center text-center fixed-bottom mb-5">
+  <div
+    v-if="petInfo.name != ''"
+    class="d-flex justify-content-center text-center fixed-bottom mb-5"
+  >
     <p class="pt-5 text-light">{{ petInfo.name }}</p>
     <img
       :src="petInfo.img"
@@ -93,6 +98,9 @@ export default {
       petInfo: {
         img: "",
         name: "",
+        age: "",
+        tags: [],
+        _id: "",
         subkind: "",
       },
       pets: [
@@ -126,6 +134,38 @@ export default {
       } else {
         return "";
       }
+    },
+    getSuggestions() {
+      console.log(          {
+            age: this.petInfo.age,
+            kind: this.petInfo.kind,
+            subkind: this.petInfo.subkind,
+            _id: this.petInfo._id,
+            tags: []
+          });
+      axios
+        .post(
+          "http://" + import.meta.env.VITE_API_USERS + "/match/getSuggestion",
+          {
+            age: this.petInfo.age,
+            kind: this.petInfo.kind,
+            subkind: this.petInfo.subkind,
+            _id: this.petInfo._id,
+            tags: []
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Mascotas");
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     getUser() {
       axios
@@ -161,9 +201,15 @@ export default {
             );
             this.$router.push("/profile");
           }
+          console.log("Info mascota");
+          console.log(data);
           this.petInfo.name = data.name;
+          this.petInfo.kind = data.kind;
           this.petInfo.subkind = data.subkind;
           this.petInfo.img = import.meta.env.VITE_IMAGES + data.img;
+          this.petInfo._id = data._id;
+          this.petInfo.age = data.age;
+          this.getSuggestions();
         })
         .catch((error) => {
           console.error(error);

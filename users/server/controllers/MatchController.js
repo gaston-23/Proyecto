@@ -22,13 +22,15 @@ class MatchController {
 			
 			try {
 				let pets = await Pet.find( {kind: req.body.kind} );
+				console.log("body",req.body);
+				console.log(pets);
 				pets = pets.map(el => {
 					let w = 0;
 					w += el.subkind == req.body.subkind ? 20 : 0;
 					w -= Math.abs(el.age - req.body.age) ;
-					el.tags.forEach(element => {
-						w += req.body.tags.some(element)? 3 : 0;
-					});
+					// el.tags.forEach(element => {
+					// 	w += req.body.tags.some(element)? 3 : 0;
+					// });
 					el.w = w;
 					if (el._id != req.body._id) {
 						return el;
