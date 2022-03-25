@@ -2,6 +2,8 @@ require('dotenv').config();
 
 import Pet from '../models/pet';
 import Like from '../models/like';
+import Match from '../models/match';
+import User from '../models/user';
 
 
 import passport from 'passport';
@@ -66,7 +68,7 @@ class MatchController {
 		console.log(payload)
 		if (!payload) return res.status(401).send({ message: 'Sin autorización' });
 
-	    console.log(req.body);
+	    console.log("body_completo",req.body);
 		let like = new Like();
 		if(req.body.like){
 			like.user	= req.body.user;
@@ -74,7 +76,7 @@ class MatchController {
 			like.time	= moment();
 			like.owner	= payload.user._id;
 			
-			 
+			console.log("like",like);
 			await like.save()
 			.then(saved => {
 				let matched = Like.find( //no probado
@@ -83,7 +85,7 @@ class MatchController {
 				  )
 					.then((found) => {
 						console.log('like asignado ',found);
-						if (setMatch(req.body.user,payload.user._id,req.body.pet)) return true
+						if (MatchController.setMatch(req.body.user,payload.user._id,req.body.pet)) return true
 						else{
 							console.log('Error en matcheo');
 							return false
@@ -135,11 +137,14 @@ class MatchController {
 		match1.time = moment.now();
 		match1.owner = user1;
 
+		console.log("match1",match1);
+
 		let flag1 = await match1.save()
 			.then( saved => {
+				console.log("saved",saved);
 				User.findByIdAndUpdate( //no probado
 					  { _id: user1 },
-					  { $addToSet: { match: saved._id } }
+					  { $addToSet: { matchs: saved._id } }
 					)
 					  .then((updated) => {
 						  console.log('match asignado ',updated);
@@ -160,7 +165,7 @@ class MatchController {
 			.then( saved => {
 				User.findByIdAndUpdate( //no probado
 					{ _id: user2 },
-					{ $addToSet: { match: saved._id } }
+					{ $addToSet: { matchs: saved._id } }
 				)
 					.then((updated) => {
 						console.log('match asignado ',updated);

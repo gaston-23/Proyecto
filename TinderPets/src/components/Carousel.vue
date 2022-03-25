@@ -35,14 +35,14 @@
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i @click="dislike" class="fa-solid fa-circle-xmark"></i
+                ><i @click="like(false,pet.owner,pet._id)" class="fa-solid fa-circle-xmark"></i
               ></a>
               <a
                 class="btn btn-success"
                 href="#carouselExampleIndicators"
                 role="button"
                 data-slide="next"
-                ><i @click="like" class="fa-solid fa-heart"></i
+                ><i @click="like(true,pet.owner,pet._id)" class="fa-solid fa-heart"></i
               ></a>
             </div>
           </div>
@@ -249,16 +249,7 @@ export default {
           }
         )
         .then((res) => {
-          let data = res.data[0];
-          if (data == null) {
-            alert(
-              "¡No tienes ninguna mascota creada! Ingresa una para continuar"
-            );
-            this.$router.push("/profile");
-          }
-          this.petInfo.name = data.name;
-          this.petInfo.subkind = data.subkind;
-          this.petInfo.img = import.meta.env.VITE_IMAGES + data.img;
+          console.log(res)
         })
         .catch((error) => {
           console.error(error);
