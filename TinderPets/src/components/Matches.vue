@@ -39,6 +39,7 @@ import axios from "axios";
 export default {
   components: { BottomNavBar },
   created() {
+    this.token = localStorage.getItem("t");
     if (this.token == null) {
       this.$router.push("/login");
     }
